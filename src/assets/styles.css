@@ -1,0 +1,250 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700;900&display=swap');
+
+html {
+  font-family: Rubik;
+}
+/* Navbar  */
+@media (min-width: 900px) {
+  .nav-bar {
+    height: 120px;
+    padding-top: auto;
+    padding-bottom: auto;
+    border-bottom: 1px solid black;
+  }
+
+  .search-container {
+    margin-right: 20px;
+  }
+
+  .search-product {
+    border-radius: 30px;
+    padding-left: 20px;
+    height: 40px;
+  }
+
+  .avatar-nav {
+    border-radius: 50px;
+  }
+
+  .nav-bar {
+    font-family: Rubik;
+  }
+
+  .nav-branding {
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .nav-menu {
+    font-size: 14px !important;
+    margin-right: -2px;
+  }
+
+  .nav-menu:hover {
+    font-weight: 700;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+  /* End Navbar */
+
+  /* page product */
+  .cupon-info {
+    border-right: 1px solid #bbbbbb;
+  }
+  .product {
+    font-family: Rubik;
+    height: 1000px !important;
+  }
+
+  .product-page {
+    text-align: center !important;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+  }
+
+  .promo-title {
+    color: #6a4029 !important;
+    font-size: 25px;
+    font-weight: 700;
+    font-family: Rubik;
+  }
+
+  .promo-desc {
+    width: 231px;
+    font-size: 12px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 60px;
+  }
+
+  .cupon {
+    height: 109px;
+    border: 1px solid black;
+    border-radius: 30px;
+    text-align: left;
+    margin-bottom: 20px;
+    padding-left: 20px;
+  }
+
+  .cupon-image {
+    position: absolute !important;
+    width: 85px;
+    height: 94px;
+    margin-top: auto;
+  }
+
+  .about-cupon {
+    position: absolute;
+    left: 120px;
+  }
+
+  .cupon-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-top: 10px;
+    line-height: 14px;
+  }
+
+  .cupon-desc {
+    margin-top: -10px;
+    font-size: 12px;
+    width: 203px;
+    font-weight: 400;
+  }
+  .apply-cupon {
+    margin-top: 30px;
+    background-color: #6a4029 !important;
+    border-radius: 20px;
+    width: 100%;
+    height: 60px;
+  }
+  .apply-cupon:hover {
+    background-color: #6a4029 !important;
+  }
+
+  .apply-cupon:focus {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+  .product-card {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .card-product {
+    display: inline-block;
+  }
+  .menu-short {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .sort-product {
+    margin-right: 20px;
+  }
+  /* end product */
+}
+
+@media (max-width: 900px) {
+  /* navbar */
+  .nav-bar {
+    text-align: center;
+  }
+  .chat-icon {
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+  }
+  .icon-chat {
+    background-color: white !important;
+  }
+  /* end navbar */
+  /* product */
+  .product {
+    text-align: center;
+  }
+  .promo-title {
+    color: #6a4029 !important;
+    font-size: 25px;
+    font-weight: 700;
+    font-family: Rubik;
+  }
+
+  .promo-desc {
+    width: 231px;
+    font-size: 12px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 60px;
+  }
+  .cupon-title {
+    font-size: 14px !important;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-top: 10px;
+    line-height: 16px !important;
+  }
+  .cupon-desc {
+    margin-top: -10px;
+    font-size: 12px;
+    width: 203px;
+    font-weight: 400;
+  }
+  .cupon {
+    height: 109px;
+    border: 1px solid black;
+    border-radius: 30px;
+    text-align: left;
+    margin-bottom: 20px;
+    padding-left: 20px;
+  }
+
+  .cupon-image {
+    position: absolute !important;
+    width: 85px;
+    height: 94px;
+    margin-top: auto;
+  }
+
+  .about-cupon {
+    max-width: 200px;
+    position: absolute;
+    left: 120px;
+  }
+  .apply-cupon {
+    margin-top: 30px;
+    background-color: #6a4029 !important;
+    border-radius: 20px;
+    width: 100%;
+    height: 60px;
+    margin-bottom: 30px;
+  }
+  .apply-cupon:hover {
+    background-color: #6a4029 !important;
+  }
+
+  .apply-cupon:focus {
+    outline: none !important;
+    box-shadow: none;
+  }
+  /* end product */
+  .footer {
+    text-align: center !important;
+  }
+  .footer-main {
+    text-align: center !important;
+  }
+  .footer-image {
+    position: absolute;
+    left: 100px;
+  }
+  .footer-title {
+    margin-left: 10px !important;
+  }
+  .footer-desc {
+    margin-left: auto;
+    margin-right: auto;
+    width: 200px !important;
+  }
+}
