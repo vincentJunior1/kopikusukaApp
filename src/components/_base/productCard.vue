@@ -81,13 +81,13 @@ export default {
   props: ['dataProduct'],
   data() {
     return {
-      role: 2
+      role: 1
     }
   },
   methods: {
     productDetail(product_id) {
-      console.log(product_id)
-      this.$route.push({ name: 'productDetail', params: { id: product_id } })
+      // console.log(product_id)
+      this.$router.push({ name: 'productDetail', params: { id: product_id } })
     }
   }
 }
