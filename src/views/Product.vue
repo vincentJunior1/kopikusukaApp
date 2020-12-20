@@ -27,29 +27,13 @@ export default {
   },
   data() {
     return {
-      cupon: [
-        {
-          cupon_name: 'Selamat Hari Ibu aslkdfjlksdjflksdjafkjsd',
-          cupon_desc: 'kode promo hanya berlaku dengan minimal pembelian 20000'
-        },
-        {
-          cupon_name: 'Selamat Hari Natal',
-          cupon_desc: 'kode promo hanya berlaku dengan minimal pembelian 20000'
-        },
-        {
-          cupon_name: 'Selamat Hari Ibu aslkdfjlksdjflksdjafkjsd',
-          cupon_desc: 'kode promo hanya berlaku dengan minimal pembelian 20000'
-        },
-        {
-          cupon_name: 'Selamat Hari Natal',
-          cupon_desc: 'kode promo hanya berlaku dengan minimal pembelian 20000'
-        }
-      ],
+      cupon: [],
       product: []
     }
   },
   created() {
     this.getProduct()
+    this.getCupon()
   },
   methods: {
     getProduct() {
@@ -57,6 +41,16 @@ export default {
         .get('http://localhost:3000/product/?page=1&limit=10')
         .then(res => {
           this.product = res.data.data
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    getCupon() {
+      axios
+        .get('http://localhost:3000/cupon')
+        .then(res => {
+          this.cupon = res.data.data
         })
         .catch(error => {
           console.log(error)

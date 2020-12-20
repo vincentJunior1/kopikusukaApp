@@ -25,6 +25,11 @@
           >{{ item.size_type }}</option
         >
       </select>
+      <div class="mb-3">
+        <select class="form-control delivery-method">
+          <option disabled selected>Select Delivery Method</option>
+        </select>
+      </div>
     </div>
     <div class="group" style="position:relative;">
       <b-form inline class="form-quantity">
@@ -34,6 +39,7 @@
       </b-form>
       <b-button class="add-to-cart">Add To Cart</b-button>
     </div>
+    <b-button class="check-out">Check Out</b-button>
   </div>
 </template>
 <script>
@@ -83,14 +89,14 @@ export default {
 .product-prices {
   font-size: 34px;
   font-weight: 500;
-  margin-top: 30px;
+  margin-top: 10px;
 }
 .product-desc {
   width: 450px;
   font-size: 18px;
   line-height: 36px;
   font-weight: 500;
-  margin-top: 45px;
+  margin-top: 15px;
 }
 .size-pick {
   height: 65px;
@@ -99,7 +105,9 @@ export default {
   padding-left: 5%;
   font-size: 22px;
 }
-
+.size-pick:focus {
+  box-shadow: none !important;
+}
 .size-pick:focus {
   outline: none !important;
 }
@@ -144,5 +152,39 @@ export default {
   width: 50%;
   height: 100%;
   border-radius: 20px;
+  background-color: #ffba33 !important;
+  color: #6a4029 !important;
+  font-weight: 700;
+  font-size: 22px !important;
+  border: none !important;
+}
+
+.add-to-cart:focus {
+  box-shadow: none !important;
+}
+.delivery-method {
+  margin-top: 20px;
+  width: 81%;
+  height: 65px;
+  padding-left: 5%;
+  font-size: 22px;
+  font-weight: 400;
+  border-radius: 10px;
+}
+
+.delivery-method:focus {
+  box-shadow: none !important;
+}
+.check-out {
+  margin-top: 20px;
+  height: 65px;
+  width: 81%;
+  border-radius: 10px;
+  background-color: #6a4029 !important;
+  font-size: 22px;
+  font-weight: 700;
+}
+.check-out:focus {
+  box-shadow: none !important;
 }
 </style>
