@@ -16,7 +16,7 @@
         <option
           class="size-option"
           v-for="(item, index) in informationDetail[1]"
-          :key="index + 1"
+          :key="index"
           v-show="
             (item.category_id == informationDetail[0].category_id &&
               item.size_id == productSize[0]) ||
@@ -53,7 +53,7 @@ export default {
   },
   created() {
     this.productSize = this.splitSize
-    console.log(this.productSize)
+    // console.log(this.splitSize)
   },
   data() {
     return {

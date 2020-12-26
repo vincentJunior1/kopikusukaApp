@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Product from '../views/Product.vue'
 import ProductDetail from '../views/ProductDetail.vue'
 import AddNewProduct from '../views/AddNewProduct.vue'
+import History from '../views/History.vue'
 
 Vue.use(VueRouter)
 
@@ -24,9 +25,14 @@ const routes = [
     component: ProductDetail
   },
   {
-    path:'/addnewproduct',
-    name :'addNewProduct',
+    path: '/addnewproduct',
+    name: 'addNewProduct',
     component: AddNewProduct
+  },
+  {
+    path: '/history',
+    name: 'history',
+    component: History
   }
 ]
 

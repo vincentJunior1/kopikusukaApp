@@ -12,7 +12,7 @@
           <b-nav-item class="nav-menu" to="/">Home</b-nav-item>
           <b-nav-item class="nav-menu" to="/product">Product</b-nav-item>
           <b-nav-item class="nav-menu" to="/">Your Card</b-nav-item>
-          <b-nav-item class="nav-menu" to="/">History</b-nav-item>
+          <b-nav-item class="nav-menu" to="/history">History</b-nav-item>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->

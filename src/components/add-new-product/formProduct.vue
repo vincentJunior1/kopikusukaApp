@@ -33,48 +33,82 @@
         <p class="size-label">Input product size :</p>
         <p class="size-inf">Click size you want to use for this product</p>
         <div inline class="size">
-          <b-button
-            class="drink-button current"
-            @Click="
-              drinkButton
-              rButton
-            "
-            :disabled="activeDrink === 0"
-            >R</b-button
-          >
-          <b-button
-            class="drink-button"
-            @Click="
-              drinkButton
-              size += '1'
-            "
-            :disabled="activeDrink === 0"
-            >L</b-button
-          >
-          <b-button
-            class="drink-button"
-            @click="drinkButton"
-            :disabled="activeDrink === 0"
-            >XL</b-button
-          >
-          <b-button
-            class="food-button"
-            @click="foodButton"
-            :disabled="activeFood === 0"
-            >250 Gram</b-button
-          >
-          <b-button
-            class="food-button"
-            @click="foodButton"
-            :disabled="activeFood === 0"
-            >500 Gram</b-button
-          >
-          <b-button
-            class="food-button"
-            @click="foodButton"
-            :disabled="activeFood === 0"
-            >750 Gram</b-button
-          >
+          <label class="container"
+            >Reguler
+            <input
+              class="radio-size"
+              type="radio"
+              checked="checked"
+              @click="drinkButton"
+              :value="1"
+              v-model="form.sizeProduct[0]"
+              :disabled="activeDrink == 0"
+            />
+            <span class="checkmark"></span>
+          </label>
+          <label class="container"
+            >Medium
+            <input
+              class="radio-size"
+              type="radio"
+              checked="checked"
+              @click="drinkButton"
+              :value="2"
+              v-model="form.sizeProduct[1]"
+              :disabled="activeDrink == 0"
+            />
+            <span class="checkmark"></span>
+          </label>
+          <label class="container"
+            >Large
+            <input
+              type="radio"
+              class="radio-size"
+              @click="drinkButton"
+              checked="checked"
+              :value="3"
+              v-model="form.sizeProduct[2]"
+              :disabled="activeDrink == 0"
+            />
+            <span class="checkmark"></span>
+          </label>
+          <label class="container"
+            >250 Gram
+            <input
+              class="radio-size"
+              type="radio"
+              checked="checked"
+              :value="4"
+              v-model="form.sizeProduct[3]"
+              :disabled="activeFood == 0"
+            />
+            <span class="checkmark"></span>
+          </label>
+          <label class="container"
+            >500 Gram
+            <input
+              class="radio-size"
+              type="radio"
+              checked="checked"
+              :value="5"
+              v-model="form.sizeProduct[4]"
+              :disabled="activeFood == 0"
+            />
+            <span class="checkmark"></span>
+          </label>
+          <label class="container"
+            >750 Gram
+            <input
+              type="radio"
+              class="radio-size"
+              checked="checked"
+              :value="6"
+              v-model="form.sizeProduct[5]"
+              :disabled="activeFood == 0"
+            />
+            <span class="checkmark"></span>
+          </label>
+          {{ form }}
           <b-button class="food-button" @click="resetButton">Reset</b-button>
         </div>
         <p class="size-label">Input delivery method :</p>
@@ -94,53 +128,53 @@
 <script>
 export default {
   name: 'formProduct',
+  props: ['getData'],
+  computed: {
+    checkProduct() {
+      return this.form.sizeProduct
+    }
+  },
   data() {
     return {
       activeDrink: 1,
       activeFood: 1,
-      sizeProduct: '',
       form: {
+        sizeProduct: [],
         product_name: '',
         product_price: '',
-        product_description: ''
+        category_id: 0,
+        product_description: '',
+        quantityProduct: 0
       }
     }
   },
   created() {
-    console.log(this.size)
-    // console.log(this.form.product_name)
+    console.log(this.quantityProduct)
+  },
+  mounted() {
+    this.$root.$on('dataQuantity', event => {
+      this.form.quantityProduct = event
+    })
   },
   methods: {
     drinkButton() {
       this.activeDrink = 1
       this.activeFood = 0
+      this.form.category_id = 2
     },
     foodButton() {
       this.activeDrink = 0
       this.activeFood = 1
+      this.form.category_id = 1
     },
     resetButton() {
-      this.activeDrink = 1
+      this.form.sizeProduct = []
       this.activeFood = 1
-    },
-    rButton() {
-      if (this.sizeProduct === '') {
-        this.sizeProduct = '1'
-      } else {
-        this.sizeProduct = this.sizeProduct.join('1')
-      }
-      console.log('ok')
-    },
-    lButton() {
-      if (this.sizeProduct === '') {
-        this.sizeProduct = '2'
-      } else {
-        this.sizeProduct = this.sizeProduct.join('2')
-      }
+      this.activeDrink = 1
     },
     getAllData() {
       // console.log(this.form)
-      this.$emit('formData', this.form)
+      console.log(this.form)
     }
   }
 }
@@ -171,22 +205,6 @@ export default {
 .size {
   margin-top: 30px;
   /* text-align: center; */
-}
-.drink-button {
-  width: 60px;
-  height: 60px;
-  border-radius: 60px;
-  margin-right: 15px;
-  border: none !important;
-}
-.food-button {
-  width: 60px;
-  height: 60px;
-  text-align: center;
-  font-size: 13px;
-  border-radius: 60px;
-  margin-right: 15px;
-  border: none !important;
 }
 
 .current {
@@ -236,5 +254,66 @@ export default {
 }
 .cancel-product:focus {
   box-shadow: none !important;
+}
+.container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.container .radio-size {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Create a custom radio button */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+  border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover .radio-size ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.container .radio-size:checked ~ .checkmark {
+  background-color: #ffba33;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+  content: '';
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.container .radio-size:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.container .checkmark:after {
+  top: 9px;
+  left: 9px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
 }
 </style>

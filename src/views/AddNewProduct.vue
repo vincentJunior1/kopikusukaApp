@@ -2,8 +2,8 @@
   <div class="add-new-product">
     <b-container class="bv-example-row">
       <b-row>
-        <b-col sm="6"><FormDetail @dataQuantity="dataQuantity"/></b-col>
-        <b-col sm="6"><FormProduct @formData="formData"/></b-col>
+        <b-col sm="6"><FormDetail @getData="dataQuantity"/></b-col>
+        <b-col sm="6"><FormProduct v-on:getData="quantity"/></b-col>
         {{ quantity }}
       </b-row>
     </b-container>
@@ -29,13 +29,6 @@ export default {
     }
   },
   methods: {
-    formData(event) {
-      const allData = {
-        ...event,
-        Hello: 'aaaa'
-      }
-      console.log(allData)
-    },
     dataQuantity(event) {
       this.quantity = event
     }

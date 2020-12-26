@@ -17,23 +17,24 @@
       <p class="delivery-method">Delivery Hour :</p>
       <b-form-select
         class="delivery-from"
-        v-model="selected"
+        v-model="deliveryStart"
         :options="deliveryTime"
         ><b-select disabled>Select Start Hour</b-select></b-form-select
       >
       <b-form-select
         class="delivery-ended"
-        v-model="selected"
+        v-model="deliveryEnded"
         :options="endedTime"
         ><b-select disabled>Select Start Hour</b-select></b-form-select
       >
-      {{ selected }}
+      {{ deliveryStart }}
+      {{ deliveryEnded }}
     </div>
     <div class="quantity">
       <p class="delivery-method">Quantity :</p>
       <input
         class="quantity-input"
-        v-model="quantity"
+        @input="getData"
         type="text"
         placeholder="Quantity"
       />
@@ -46,7 +47,8 @@ export default {
   name: 'formDetail',
   data() {
     return {
-      selected: null,
+      deliveryStart: null,
+      deliveryEnded: null,
       deliveryTime: {
         1: '1 PM',
         2: '2 PM',
@@ -66,15 +68,13 @@ export default {
       quantity: 0
     }
   },
+  created() {
+    console.log(this.quantity)
+  },
   methods: {
-    getQuantity() {
-      for (let i = 0; i <= 50; i++) {
-        this.quantity[i] = { i: i }
-      }
-    },
-    getData() {
-      console.log(this.quantity)
-      this.$emit('dataQuantity', this.quantity)
+    getData(event) {
+      this.quantity = event.target.value
+      this.$root.$emit('dataQuantity', this.quantity)
     }
   }
 }

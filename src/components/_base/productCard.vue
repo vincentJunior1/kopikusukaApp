@@ -12,7 +12,7 @@
         <span class="sort-product" sm="1">
           Favorite & Promo
         </span>
-        <span class="sort-product" sm="1">
+        <span class="sort-product" @click="getSortingDrink" sm="1">
           Coffee
         </span>
         <span class="sort-product" sm="1">
@@ -74,6 +74,9 @@
   height: 40px;
   border-radius: 40px;
 }
+.sort-product {
+  cursor: pointer !important;
+}
 </style>
 
 <script>
@@ -81,13 +84,21 @@ export default {
   props: ['dataProduct'],
   data() {
     return {
-      role: 1
+      role: 1,
+      sorting: ''
     }
+  },
+  created() {
+    this.getSortingDrink()
   },
   methods: {
     productDetail(product_id) {
       // console.log(product_id)
       this.$router.push({ name: 'productDetail', params: { id: product_id } })
+    },
+    getSortingDrink() {
+      this.sorting = '1'
+      this.$emit('sortingId', this.sorting)
     }
   }
 }

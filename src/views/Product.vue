@@ -7,7 +7,16 @@
         </b-col>
         <b-col sm="8">
           <b-row sm="12" style="display:inline" class="text-center">
-            <ProductCard v-bind:dataProduct="product" />
+            <ProductCard
+              v-bind:dataProduct="product"
+              @sortingId="getProductSort"
+            />
+            <b-pagination
+              v-model="currentPage"
+              :total-rows="rows"
+              :per-page="limit"
+              @change="handlePageChange"
+            ></b-pagination>
           </b-row>
         </b-col>
       </b-row>
@@ -25,10 +34,19 @@ export default {
     Cupon,
     ProductCard
   },
+  computed: {
+    rows() {
+      return this.totalRows
+    }
+  },
   data() {
     return {
       cupon: [],
-      product: []
+      product: [],
+      currentPage: 1,
+      totalRows: null,
+      limit: 3,
+      page: 1
     }
   },
   created() {
@@ -38,19 +56,40 @@ export default {
   methods: {
     getProduct() {
       axios
-        .get('http://localhost:3000/product/?page=1&limit=10')
+        .get(
+          `http://localhost:3000/product/?page=${this.page}&limit=${this.limit}`
+        )
         .then(res => {
+          this.totalRows = res.data.pagination.totalData
           this.product = res.data.data
         })
         .catch(error => {
           console.log(error)
         })
     },
+    handlePageChange(numberPage) {
+      this.page = numberPage
+      this.getProduct()
+    },
     getCupon() {
       axios
         .get('http://localhost:3000/cupon')
         .then(res => {
           this.cupon = res.data.data
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    getProductSort(event) {
+      axios
+        .get(
+          `http://localhost:3000/sorting/${event}?page=${this.page}&limit=${this.limit}`
+        )
+        .then(res => {
+          this.product = []
+          this.product = res.data.data
+          console.log('ok')
         })
         .catch(error => {
           console.log(error)
