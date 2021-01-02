@@ -1,5 +1,6 @@
 <template>
   <div class="add-new-product">
+    <Navbar />
     <b-container class="bv-example-row">
       <b-row>
         <b-col sm="6"><FormDetail @getData="dataQuantity"/></b-col>
@@ -7,6 +8,7 @@
         {{ quantity }}
       </b-row>
     </b-container>
+    <Footer />
   </div>
 </template>
 <style scoped>
@@ -15,13 +17,17 @@
 }
 </style>
 <script>
+import Navbar from '../components/_base/Navbar'
+import Footer from '../components/_base/Footer'
 import FormProduct from '../components/add-new-product/formProduct'
 import FormDetail from '../components/add-new-product/formDetail'
 export default {
   name: 'AddNewProduct',
   components: {
     FormProduct,
-    FormDetail
+    FormDetail,
+    Navbar,
+    Footer
   },
   data() {
     return {

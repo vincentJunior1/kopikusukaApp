@@ -18,16 +18,13 @@
           type="text"
           placeholder="Type the price"
         />
-        {{ form.product_price }}
-        {{ form.product_name }}
-        {{ form.product_description }}
       </div>
       <div class="form-group">
         <p class="label-input">Description :</p>
         <input
           class="input-add"
           type="text"
-          v-model="form.product_description"
+          v-model="form.product_desc"
           placeholder="Describe your product min. 150 characters"
         />
         <p class="size-label">Input product size :</p>
@@ -41,7 +38,7 @@
               checked="checked"
               @click="drinkButton"
               :value="1"
-              v-model="form.sizeProduct[0]"
+              v-model="form.size_id[0]"
               :disabled="activeDrink == 0"
             />
             <span class="checkmark"></span>
@@ -54,7 +51,7 @@
               checked="checked"
               @click="drinkButton"
               :value="2"
-              v-model="form.sizeProduct[1]"
+              v-model="form.size_id[1]"
               :disabled="activeDrink == 0"
             />
             <span class="checkmark"></span>
@@ -67,7 +64,7 @@
               @click="drinkButton"
               checked="checked"
               :value="3"
-              v-model="form.sizeProduct[2]"
+              v-model="form.size_id[2]"
               :disabled="activeDrink == 0"
             />
             <span class="checkmark"></span>
@@ -77,9 +74,10 @@
             <input
               class="radio-size"
               type="radio"
+              @click="foodButton"
               checked="checked"
               :value="4"
-              v-model="form.sizeProduct[3]"
+              v-model="form.size_id[3]"
               :disabled="activeFood == 0"
             />
             <span class="checkmark"></span>
@@ -89,9 +87,10 @@
             <input
               class="radio-size"
               type="radio"
+              @click="foodButton"
               checked="checked"
               :value="5"
-              v-model="form.sizeProduct[4]"
+              v-model="form.size_id[4]"
               :disabled="activeFood == 0"
             />
             <span class="checkmark"></span>
@@ -101,23 +100,54 @@
             <input
               type="radio"
               class="radio-size"
+              @click="foodButton"
               checked="checked"
               :value="6"
-              v-model="form.sizeProduct[5]"
+              v-model="form.size_id[5]"
               :disabled="activeFood == 0"
             />
             <span class="checkmark"></span>
           </label>
-          {{ form }}
           <b-button class="food-button" @click="resetButton">Reset</b-button>
         </div>
         <p class="size-label">Input delivery method :</p>
         <p class="size-inf">Click method you want to use for this product</p>
       </div>
       <div inline class="size">
-        <b-button class="delivery-button">Home Delivery</b-button>
-        <b-button class="delivery-button">Dine In</b-button>
-        <b-button class="delivery-button">Take away</b-button>
+        <label class="container"
+          >Home Delivery
+          <input
+            type="radio"
+            class="radio-size"
+            checked="checked"
+            :value="1"
+            v-model="form.delivery_method_id[0]"
+          />
+          <span class="checkmark"></span>
+        </label>
+        <label class="container"
+          >Dine In
+          <input
+            type="radio"
+            class="radio-size"
+            checked="checked"
+            :value="2"
+            v-model="form.delivery_method_id[1]"
+          />
+          <span class="checkmark"></span>
+        </label>
+        <label class="container"
+          >Take Away
+          <input
+            type="radio"
+            class="radio-size"
+            checked="checked"
+            :value="3"
+            v-model="form.delivery_method_id[2]"
+          />
+          <span class="checkmark"></span>
+        </label>
+        <b-button class="food-button" @click="resetDelivery">Reset</b-button>
       </div>
       <b-button class="save-product" @click="getAllData">Save Product</b-button>
       <b-button class="cancel-product">Cancel</b-button>
@@ -126,25 +156,23 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   name: 'formProduct',
   props: ['getData'],
-  computed: {
-    checkProduct() {
-      return this.form.sizeProduct
-    }
-  },
   data() {
     return {
       activeDrink: 1,
       activeFood: 1,
       form: {
-        sizeProduct: [],
+        size_id: [],
         product_name: '',
         product_price: '',
         category_id: 0,
-        product_description: '',
-        quantityProduct: 0
+        product_desc: '',
+        quantityProduct: 0,
+        delivery_method_id: [],
+        product_status: 1
       }
     }
   },
@@ -157,6 +185,7 @@ export default {
     })
   },
   methods: {
+    ...mapActions(['postProduct']),
     drinkButton() {
       this.activeDrink = 1
       this.activeFood = 0
@@ -168,13 +197,22 @@ export default {
       this.form.category_id = 1
     },
     resetButton() {
-      this.form.sizeProduct = []
+      this.form.size_id = []
       this.activeFood = 1
       this.activeDrink = 1
     },
+    resetDelivery() {
+      this.form.delivery_method = []
+    },
     getAllData() {
-      // console.log(this.form)
-      console.log(this.form)
+      this.postProduct(this.form)
+        .then(result => {
+          console.log(result)
+          this.$router.push('/product')
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   }
 }

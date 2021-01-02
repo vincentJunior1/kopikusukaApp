@@ -1,5 +1,6 @@
 <template>
   <div class="product">
+    <Navbar />
     <b-container class="bv-example-row">
       <b-row class="product-page">
         <b-col class="cupon-info" sm="4">
@@ -21,10 +22,13 @@
         </b-col>
       </b-row>
     </b-container>
+    <Footer />
   </div>
 </template>
 
 <script>
+import Navbar from '../components/_base/Navbar'
+import Footer from '../components/_base/Footer'
 import Cupon from '../components/_base/Cupon'
 import ProductCard from '../components/_base/productCard'
 import axios from 'axios'
@@ -32,7 +36,9 @@ export default {
   name: 'Product',
   components: {
     Cupon,
-    ProductCard
+    ProductCard,
+    Navbar,
+    Footer
   },
   computed: {
     rows() {
@@ -60,11 +66,12 @@ export default {
           `http://localhost:3000/product/?page=${this.page}&limit=${this.limit}`
         )
         .then(res => {
+          console.log(res)
           this.totalRows = res.data.pagination.totalData
           this.product = res.data.data
         })
         .catch(error => {
-          console.log(error)
+          console.log(error.response)
         })
     },
     handlePageChange(numberPage) {

@@ -3,7 +3,7 @@
     <b-button
       class="btn-add-new"
       variant="danger"
-      v-if="role == 1"
+      v-if="user.user_role == 1"
       to="/addNewProduct"
       >Add Product</b-button
     >
@@ -12,7 +12,7 @@
         <span class="sort-product" sm="1">
           Favorite & Promo
         </span>
-        <span class="sort-product" @click="getSortingDrink" sm="1">
+        <span class="sort-product" sm="1">
           Coffee
         </span>
         <span class="sort-product" sm="1">
@@ -27,23 +27,22 @@
       </b-col>
     </b-row>
     <b-row class="all-product">
-      <div
-        class="card"
-        v-for="(item, index) in dataProduct"
-        :key="index"
-        @click="productDetail(item.product_id)"
-      >
+      <div class="card" v-for="(item, index) in dataProduct" :key="index">
         <img
           class="img-product"
           src="https://picsum.photos/600/300/?image=25"
           alt=""
+          @click="productDetail(item.product_id)"
         />
         <p class="product-title">{{ item.product_name }}</p>
         <p class="product-price">Rp.{{ item.product_price }}</p>
-        <b-button class="btn-delete" variant="danger" v-if="role === 1"
+        <b-button
+          class="btn-delete"
+          variant="danger"
+          v-if="user.user_role === 1"
           >X</b-button
         >
-        <b-button class="btn-update" variant="info" v-if="role === 1"
+        <b-button class="btn-update" variant="info" v-if="user.user_role === 1"
           >U</b-button
         >
       </div>
@@ -80,18 +79,22 @@
 </style>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   props: ['dataProduct'],
   data() {
     return {
-      role: 1,
-      sorting: ''
+      sorting: '',
+      user: ''
     }
   },
   created() {
     this.getSortingDrink()
+    this.user = JSON.parse(localStorage.getItem('user'))
+    console.log(this.user)
   },
   methods: {
+    ...mapState(['token']),
     productDetail(product_id) {
       // console.log(product_id)
       this.$router.push({ name: 'productDetail', params: { id: product_id } })

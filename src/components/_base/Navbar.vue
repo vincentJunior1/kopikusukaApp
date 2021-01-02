@@ -40,11 +40,26 @@
                 alt=""
               />
             </template>
+            <button @click="handleLogout">Keluar</button>
             <b-dropdown-item href="#">Profile</b-dropdown-item>
-            <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+            <b-dropdown-item @click="handleLogout">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
     </b-container>
   </b-navbar>
 </template>
+
+<script>
+import { mapActions } from 'vuex'
+export default {
+  name: 'Navbar',
+  methods: {
+    ...mapActions(['logout']),
+    handleLogout() {
+      console.log('anda berhasil logout')
+      this.logout()
+    }
+  }
+}
+</script>

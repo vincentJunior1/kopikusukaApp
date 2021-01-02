@@ -55,6 +55,7 @@
   margin-bottom: 40px;
 }
 footer {
+  margin-top: 90px !important;
   margin-left: auto;
   margin-right: auto;
   font-family: rubik;

@@ -1,8 +1,10 @@
 <template>
   <div class="div">
+    <Navbar />
     <div class="home">
       <img alt="Vue logo" src="../assets/logo.png" />
     </div>
+    <Footer />
   </div>
 </template>
 
@@ -13,9 +15,20 @@
 </style>
 
 <script>
-// @ is an alias to /src
-
+import Navbar from '../components/_base/Navbar'
+import Footer from '../components/_base/Footer'
+import { mapState } from 'vuex'
 export default {
-  name: 'Home'
+  name: 'Home',
+  components: {
+    Navbar,
+    Footer
+  },
+  created() {
+    console.log(this.user.user_name)
+  },
+  methods: {
+    ...mapState(['user'])
+  }
 }
 </script>

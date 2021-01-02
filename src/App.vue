@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <Navbar />
     <router-view />
-    <Footer />
   </div>
 </template>
 
@@ -11,13 +9,16 @@
 </style>
 
 <script>
-import Navbar from './components/_base/Navbar'
-import Footer from './components/_base/Footer'
+import { mapActions } from 'vuex'
 
 export default {
-  components: {
-    Navbar,
-    Footer
+  name: 'App',
+  created() {
+    this.interceptorRequest()
+    this.interceptorResponse()
+  },
+  methods: {
+    ...mapActions(['interceptorRequest', 'interceptorResponse'])
   }
 }
 </script>
