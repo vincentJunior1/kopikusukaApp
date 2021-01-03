@@ -78,7 +78,7 @@ footer {
 
 .footer-desc {
   margin-top: 34px;
-  width: 340px;
+  max-width: 340px;
   font-weight: 400;
 }
 .icon-footer {

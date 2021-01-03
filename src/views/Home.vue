@@ -8,12 +8,6 @@
   </div>
 </template>
 
-<style scoped>
-* {
-  height: 1000px;
-}
-</style>
-
 <script>
 import Navbar from '../components/_base/Navbar'
 import Footer from '../components/_base/Footer'
