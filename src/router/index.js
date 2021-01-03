@@ -6,6 +6,7 @@ import ProductDetail from '../views/ProductDetail.vue'
 import AddNewProduct from '../views/AddNewProduct.vue'
 import History from '../views/History.vue'
 import Login from '../views/auth/login.vue'
+import EditProduct from '../views/ProductEdit.vue'
 import Store from '../store'
 Vue.use(VueRouter)
 
@@ -41,6 +42,12 @@ const routes = [
     name: 'login',
     component: Login,
     meta: { requiresVisitor: true }
+  },
+  {
+    path: '/productedit/:id',
+    name: 'productEdit',
+    component: EditProduct,
+    meta: { requiresAuth: true }
   }
 ]
 

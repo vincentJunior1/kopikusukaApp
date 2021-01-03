@@ -51,7 +51,7 @@ export default {
       product: [],
       currentPage: 1,
       totalRows: null,
-      limit: 3,
+      limit: 12,
       page: 1
     }
   },
@@ -66,7 +66,6 @@ export default {
           `http://localhost:3000/product/?page=${this.page}&limit=${this.limit}`
         )
         .then(res => {
-          console.log(res)
           this.totalRows = res.data.pagination.totalData
           this.product = res.data.data
         })
@@ -96,7 +95,6 @@ export default {
         .then(res => {
           this.product = []
           this.product = res.data.data
-          console.log('ok')
         })
         .catch(error => {
           console.log(error)

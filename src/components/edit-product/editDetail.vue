@@ -3,48 +3,24 @@
     <div class="process-payment">
       <img src="../../assets/img/proses.png" alt="" />
     </div>
-    <p class="product-name">{{ informationDetail[0].product_name }}</p>
-    <p class="product-prices">IDR {{ informationDetail[0].product_price }}</p>
-    <p class="product-desc">{{ informationDetail[0].product_desc }}</p>
-    <div class="mb-3">
-      <select
-        id="Size"
-        class="form-control size-pick"
-        v-model="product.size_id"
+    <input type="text" class="product-name" v-model="product.product_name" />
+    <input
+      type="number"
+      class="product-prices"
+      v-model="product.product_price"
+    />
+    <textarea type="text" class="product-desc" v-model="product.product_desc">
+    </textarea>
+    <select id="Size" class="form-control size-pick" placeholder="Selet Size">
+      <option disabled selected class="size-option">Select Size</option>
+      <option
+        class="size-option"
+        v-for="(item, index) in delivery"
+        :key="index"
+        :value="item.delivery_method_id"
+        >{{ item.delivery_method_type }}</option
       >
-        <option disabled selected class="size-option">Select Size</option>
-        <option
-          class="size-option"
-          v-for="(item, index) in informationDetail[1]"
-          :key="index"
-          :value="item.size_id"
-          v-show="
-            (item.category_id == informationDetail[0].category_id &&
-              item.size_id == informationDetail[2][0]) ||
-              (item.category_id == informationDetail[0].category_id &&
-                item.size_id == informationDetail[2][1]) ||
-              (item.category_id == informationDetail[0].category_id &&
-                item.size_id == informationDetail[2][2])
-          "
-          >{{ item.size_type }}</option
-        >
-      </select>
-      <div class="mb-3">
-        <select class="form-control delivery-method">
-          <option disabled selected>Select Delivery Method</option>
-          <option
-            v-for="(item, index) in informationDetail[4]"
-            :key="index"
-            v-show="
-              item.delivery_method_id == informationDetail[3][0] ||
-                item.delivery_method_id == informationDetail[3][1] ||
-                item.delivery_method_id == informationDetail[3][2]
-            "
-            >{{ item.delivery_method_type }}</option
-          >
-        </select>
-      </div>
-    </div>
+    </select>
     <div class="group" style="position:relative;">
       <b-form inline class="form-quantity">
         <b-button class="quantity" @click="increment">+</b-button>
@@ -59,26 +35,29 @@
       <b-button class="add-to-cart">Add To Cart</b-button>
     </div>
     <b-button class="check-out">Check Out</b-button>
-    {{ product }}
   </div>
 </template>
 <script>
+import { mapState, mapActions } from 'vuex'
 export default {
-  props: ['informationDetail'],
+  name: 'editDetail',
   data() {
     return {
-      product: {
-        product_id: this.informationDetail[0].product_id,
-        product_name: this.informationDetail[0].product_name,
-        size_id: '',
-        delivery_method: '',
-        history_detail_status: 1,
-        product_price: this.informationDetail[0].product_price,
-        history_detail_quantity: 0
-      }
+      product: {},
+      delivery: {}
     }
   },
+  created() {
+    this.product = this.dataDetail[0]
+    this.getDataDelivery()
+    this.delivery = this.dataDelivery
+  },
+  computed: {
+    ...mapState(['dataDetail']),
+    ...mapState(['dataDelivery'])
+  },
   methods: {
+    ...mapActions(['getDataDelivery']),
     increment() {
       this.product.history_detail_quantity += 1
     },
@@ -92,6 +71,19 @@ export default {
 </script>
 
 <style scoped>
+input {
+  border: none;
+}
+input:focus {
+  box-shadow: none !important;
+  outline: none;
+}
+textarea {
+  border: none;
+}
+textarea:focus {
+  outline: none;
+}
 .information-detail {
   margin-top: 55px;
 }
@@ -101,18 +93,23 @@ export default {
   font-size: 52px;
   font-family: Rubik;
   font-weight: 900;
+  border-bottom: 1px solid black;
+  border-width: 75% !important;
 }
 .product-prices {
   font-size: 34px;
   font-weight: 500;
-  margin-top: 10px;
+  margin-top: 20px;
+  border-bottom: 1px solid black;
 }
 .product-desc {
   width: 450px;
   font-size: 18px;
   line-height: 36px;
   font-weight: 500;
-  margin-top: 15px;
+  margin-top: 25px;
+  height: 150px;
+  border-bottom: 1px solid black;
 }
 .size-pick {
   height: 65px;

@@ -42,7 +42,11 @@
           v-if="user.user_role === 1"
           >X</b-button
         >
-        <b-button class="btn-update" variant="info" v-if="user.user_role === 1"
+        <b-button
+          class="btn-update"
+          @click="productEdit(item.product_id)"
+          variant="info"
+          v-if="user.user_role === 1"
           >U</b-button
         >
       </div>
@@ -91,17 +95,18 @@ export default {
   created() {
     this.getSortingDrink()
     this.user = JSON.parse(localStorage.getItem('user'))
-    console.log(this.user)
   },
   methods: {
     ...mapState(['token']),
     productDetail(product_id) {
-      // console.log(product_id)
       this.$router.push({ name: 'productDetail', params: { id: product_id } })
     },
     getSortingDrink() {
       this.sorting = '1'
       this.$emit('sortingId', this.sorting)
+    },
+    productEdit(product_id) {
+      this.$router.push({ name: 'productEdit', params: { id: product_id } })
     }
   }
 }
