@@ -9,7 +9,9 @@ export default new Vuex.Store({
   modules: { Auth },
   state: {
     dataDetail: {},
-    dataDelivery: {}
+    dataDelivery: {},
+    dataDeliveryProduct: [],
+    dataSizeProduct: []
   },
   mutations: {
     setDetailData(state, payload) {
@@ -17,6 +19,16 @@ export default new Vuex.Store({
     },
     setDeliveryData(state, payload) {
       state.dataDelivery = payload
+    },
+    setValidationDelivery(state, payload) {
+      let data
+      data = payload.delivery_method_id
+      state.dataDeliveryProduct = data.split(',')
+    },
+    setValidationSize(state, payload) {
+      let data
+      data = payload.size_id
+      state.dataSizeProduct = data.split(',')
     }
   },
   actions: {
@@ -38,6 +50,8 @@ export default new Vuex.Store({
           .get(`http://localhost:3000/product/${payload}`)
           .then(result => {
             context.commit('setDetailData', result.data.data)
+            context.commit('setValidationDelivery', result.data.data[0])
+            context.commit('setValidationSize', result.data.data[0])
             resolve(result)
           })
           .catch(err => {
@@ -51,6 +65,30 @@ export default new Vuex.Store({
           .get('http://localhost:3000/size/delivery/')
           .then(result => {
             context.commit('setDeliveryData', result.data.data)
+            resolve(result)
+          })
+          .catch(err => {
+            reject(new Error(err))
+          })
+      })
+    },
+    getDataSize() {
+      return new Promise((resolve, reject) => {
+        axios
+          .get('http://localhost:3000/size/size/')
+          .then(result => {
+            resolve(result.data.data)
+          })
+          .catch(err => {
+            reject(err)
+          })
+      })
+    },
+    saveEditProduct(_context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .patch(`http://localhost:3000/product/${payload.product_id}`, payload)
+          .then(result => {
             resolve(result)
           })
           .catch(err => {

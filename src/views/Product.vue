@@ -51,7 +51,7 @@ export default {
       product: [],
       currentPage: 1,
       totalRows: null,
-      limit: 12,
+      limit: 4,
       page: 1
     }
   },

@@ -3,7 +3,7 @@
     <Navbar />
     <b-container class="bv-example-row">
       <b-row>
-        <b-col>1 of 3</b-col>
+        <b-col><DetailEdit /></b-col>
         <b-col><EditDetail /></b-col>
       </b-row>
     </b-container>

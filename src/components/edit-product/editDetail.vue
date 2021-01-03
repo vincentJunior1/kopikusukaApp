@@ -9,15 +9,38 @@
       class="product-prices"
       v-model="product.product_price"
     />
+
     <textarea type="text" class="product-desc" v-model="product.product_desc">
     </textarea>
-    <select id="Size" class="form-control size-pick" placeholder="Selet Size">
+    <select id="Size" class="form-control size-pick" v-model="product.size_id">
       <option disabled selected class="size-option">Select Size</option>
+      <option
+        class="size-option"
+        v-for="(item, index) in size"
+        :key="index"
+        v-show="
+          item.size_id == dataSizeProduct[0] ||
+            item.size_id == dataSizeProduct[1] ||
+            item.size_id == dataSizeProduct[2]
+        "
+        >{{ item.size_type }}</option
+      >
+    </select>
+    <select
+      id="Size"
+      class="form-control delivery-method"
+      placeholder="Selet Size"
+    >
+      <option disabled selected class="size-option">Delivery Method</option>
       <option
         class="size-option"
         v-for="(item, index) in delivery"
         :key="index"
-        :value="item.delivery_method_id"
+        v-show="
+          item.delivery_method_id == dataDeliveryProduct[0] ||
+            item.delivery_method_id == dataDeliveryProduct[1] ||
+            item.delivery_method_id == dataDeliveryProduct[2]
+        "
         >{{ item.delivery_method_type }}</option
       >
     </select>
@@ -34,7 +57,9 @@
       </b-form>
       <b-button class="add-to-cart">Add To Cart</b-button>
     </div>
-    <b-button class="check-out">Check Out</b-button>
+    <b-button class="check-out" @click="saveEdit(product)"
+      >Save Product</b-button
+    >
   </div>
 </template>
 <script>
@@ -44,20 +69,27 @@ export default {
   data() {
     return {
       product: {},
-      delivery: {}
+      delivery: {},
+      deliveryValidation: [],
+      size: {}
     }
   },
   created() {
     this.product = this.dataDetail[0]
     this.getDataDelivery()
     this.delivery = this.dataDelivery
+    this.getSize()
   },
   computed: {
+    ...mapState(['dataDeliveryProduct']),
     ...mapState(['dataDetail']),
-    ...mapState(['dataDelivery'])
+    ...mapState(['dataDelivery']),
+    ...mapState(['dataSizeProduct'])
   },
   methods: {
     ...mapActions(['getDataDelivery']),
+    ...mapActions(['getDataSize']),
+    ...mapActions(['saveEditProduct']),
     increment() {
       this.product.history_detail_quantity += 1
     },
@@ -65,6 +97,26 @@ export default {
       if (this.product.history_detail_quantity > 0) {
         this.product.history_detail_quantity -= 1
       }
+    },
+    getSize() {
+      this.getDataSize()
+        .then(result => {
+          this.size = result
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    saveEdit(product) {
+      this.saveEditProduct(product)
+        .then(result => {
+          console.log(result)
+          console.log('sukses')
+        })
+        .catch(err => {
+          console.log(err)
+          console.log('gagal')
+        })
     }
   }
 }
@@ -117,6 +169,7 @@ textarea:focus {
   border-radius: 10px;
   padding-left: 5%;
   font-size: 22px;
+  margin-top: 40px;
 }
 .size-pick:focus {
   box-shadow: none !important;
