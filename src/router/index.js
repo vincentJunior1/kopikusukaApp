@@ -8,6 +8,7 @@ import History from '../views/History.vue'
 import Login from '../views/auth/login.vue'
 import EditProduct from '../views/ProductEdit.vue'
 import Register from '../views/auth/register.vue'
+import Payment from '../views/Payment.vue'
 import Store from '../store'
 Vue.use(VueRouter)
 
@@ -54,6 +55,12 @@ const routes = [
     path: '/productedit/:id',
     name: 'productEdit',
     component: EditProduct,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/payment',
+    name: 'Payment',
+    component: Payment,
     meta: { requiresAuth: true }
   }
 ]
