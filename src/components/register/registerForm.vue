@@ -5,10 +5,10 @@
         <img src="../../assets/img/coffee 1.png" alt="" />
         <p class="title-login">KopiKuSuka</p>
       </span>
-      <b-button to="/register" class="sign-up">Sign Up</b-button>
+      <b-button to="/login" class="sign-up">Login</b-button>
     </div>
     <div class="login-form">
-      <h2 class="login-type">login</h2>
+      <h2 class="login-type">Sign Up</h2>
       <b-form @submit.prevent="onSubmit" @reset.prevent="onReset">
         <input
           type="email"
@@ -23,12 +23,18 @@
           placeholder="Input Your Password ..."
         />
         <br />
-        <p class="forget-pass">Forget password?</p>
+        <input
+          type="text"
+          class="phone-form"
+          v-model="form.user_phone"
+          placeholder="Input Your Phone Number ..."
+        />
+        <br />
         <div class="btn-class">
-          <button class="login-button" type="submit">Login</button>
+          <button class="login-button" type="submit">Sign Up</button>
         </div>
         <div class="btn-class">
-          <button class="google-button" type="reset">Login With Google</button>
+          <button class="google-button">Login With Google</button>
         </div>
       </b-form>
     </div>
@@ -48,20 +54,29 @@ export default {
     return {
       form: {
         user_email: '',
-        user_password: ''
+        user_password: '',
+        user_phone: '',
+        user_name: 'User',
+        user_firstname: 'User',
+        user_lastname: 'User',
+        user_address: 'Location',
+        user_gender: 1,
+        user_birthday: new Date(),
+        user_role: 0,
+        user_status: 1
       }
     }
   },
   methods: {
-    ...mapActions(['login']),
+    ...mapActions(['register']),
     onSubmit() {
-      this.login(this.form)
+      this.register(this.form)
         .then(result => {
           console.log(result)
-          this.$router.push('/')
+          this.$router.push('/login')
         })
         .catch(err => {
-          console.log(err)
+          console.log(err.data)
           alert(err.data.message)
         })
     },
@@ -169,5 +184,9 @@ input {
 }
 .google-button:focus {
   outline: none;
+}
+.phone-form {
+  margin-top: 20px;
+  margin-bottom: 40px;
 }
 </style>

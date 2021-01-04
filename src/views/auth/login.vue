@@ -2,7 +2,7 @@
   <div class="login-page">
     <b-container class="bv-example-row">
       <b-row>
-        <b-col>1 of 3</b-col>
+        <b-col><LoginBackground /></b-col>
         <b-col><LoginForm /></b-col>
       </b-row>
     </b-container>
@@ -11,10 +11,12 @@
 
 <script>
 import LoginForm from '../../components/login/loginForm'
+import LoginBackground from '../../components/login/loginBackground'
 export default {
   name: 'Login',
   components: {
-    LoginForm
+    LoginForm,
+    LoginBackground
   }
 }
 </script>

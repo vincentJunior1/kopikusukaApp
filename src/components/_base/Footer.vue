@@ -52,7 +52,7 @@
 <style scoped>
 @import '../../assets/styles.css';
 .container-footer {
-  margin-bottom: 40px;
+  max-width: 100%;
 }
 footer {
   margin-top: 90px !important;

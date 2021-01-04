@@ -17,6 +17,18 @@ export default {
     }
   },
   actions: {
+    register(_context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .post('http://localhost:3000/user/register/', payload)
+          .then(result => {
+            resolve(result)
+          })
+          .catch(err => {
+            reject(new Error(err.response))
+          })
+      })
+    },
     login(context, payload) {
       return new Promise((resolve, reject) => {
         axios
