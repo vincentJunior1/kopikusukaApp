@@ -8,16 +8,7 @@
         </b-col>
         <b-col sm="8">
           <b-row sm="12" style="display:inline" class="text-center">
-            <ProductCard
-              v-bind:dataProduct="product"
-              @sortingId="getProductSort"
-            />
-            <b-pagination
-              v-model="currentPage"
-              :total-rows="rows"
-              :per-page="limit"
-              @change="handlePageChange"
-            ></b-pagination>
+            <ProductCard @sortingId="getProductSort" />
           </b-row>
         </b-col>
       </b-row>
@@ -40,43 +31,33 @@ export default {
     Navbar,
     Footer
   },
-  computed: {
-    rows() {
-      return this.totalRows
-    }
-  },
+
   data() {
     return {
-      cupon: [],
-      product: [],
-      currentPage: 1,
-      totalRows: null,
-      limit: 4,
-      page: 1
+      cupon: []
+      // totalRows: null,
+      // limit: 4,
+      // page: 1
     }
   },
   created() {
-    this.getProduct()
     this.getCupon()
   },
   methods: {
-    getProduct() {
-      axios
-        .get(
-          `http://localhost:3000/product/?page=${this.page}&limit=${this.limit}`
-        )
-        .then(res => {
-          this.totalRows = res.data.pagination.totalData
-          this.product = res.data.data
-        })
-        .catch(error => {
-          console.log(error.response)
-        })
-    },
-    handlePageChange(numberPage) {
-      this.page = numberPage
-      this.getProduct()
-    },
+    // getProduct() {
+    //   axios
+    //     .get(
+    //       `http://localhost:3000/product/?page=${this.page}&limit=${this.limit}`
+    //     )
+    //     .then(res => {
+    //       this.totalRows = res.data.pagination.totalData
+    //       this.product = res.data.data
+    //     })
+    //     .catch(error => {
+    //       console.log(error.response)
+    //     })
+    // },
+
     getCupon() {
       axios
         .get('http://localhost:3000/cupon')
@@ -86,20 +67,20 @@ export default {
         .catch(error => {
           console.log(error)
         })
-    },
-    getProductSort(event) {
-      axios
-        .get(
-          `http://localhost:3000/sorting/${event}?page=${this.page}&limit=${this.limit}`
-        )
-        .then(res => {
-          this.product = []
-          this.product = res.data.data
-        })
-        .catch(error => {
-          console.log(error)
-        })
     }
+    // getProductSort(event) {
+    //   axios
+    //     .get(
+    //       `http://localhost:3000/sorting/${event}?page=${this.page}&limit=${this.limit}`
+    //     )
+    //     .then(res => {
+    //       this.product = []
+    //       this.product = res.data.data
+    //     })
+    //     .catch(error => {
+    //       console.log(error)
+    //     })
+    // }
   }
 }
 </script>

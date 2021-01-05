@@ -27,7 +27,7 @@
       </b-col>
     </b-row>
     <b-row class="all-product">
-      <div class="card" v-for="(item, index) in dataProduct" :key="index">
+      <div class="card" v-for="(item, index) in product" :key="index">
         <img
           class="img-product"
           src="https://picsum.photos/600/300/?image=25"
@@ -50,6 +50,12 @@
           >U</b-button
         >
       </div>
+      <b-pagination
+        v-model="currentPage"
+        :total-rows="rows"
+        :per-page="limit"
+        @change="handlePageChange"
+      ></b-pagination>
     </b-row>
   </div>
 </template>
@@ -83,20 +89,35 @@
 </style>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 export default {
   props: ['dataProduct'],
   data() {
     return {
       sorting: '',
-      user: ''
+      user: '',
+      currentPage: 1
     }
   },
+  computed: {
+    ...mapGetters({
+      product: 'getDataProducts',
+      page: 'getPageProduct',
+      limit: 'getLimitProduct',
+      rows: 'getTotalRowsProduct'
+    })
+    // rows() {
+    //   return this.totalRows
+    // }
+  },
   created() {
+    this.getProduct()
+    console.log(this.product)
     this.getSortingDrink()
     this.user = JSON.parse(localStorage.getItem('user'))
   },
   methods: {
+    ...mapActions(['getProduct']),
     ...mapState(['token']),
     productDetail(product_id) {
       this.$router.push({ name: 'productDetail', params: { id: product_id } })
@@ -107,6 +128,10 @@ export default {
     },
     productEdit(product_id) {
       this.$router.push({ name: 'productEdit', params: { id: product_id } })
+    },
+    handlePageChange(numberPage) {
+      this.page = numberPage
+      this.getProduct()
     }
   }
 }

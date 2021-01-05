@@ -2,11 +2,13 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Auth from './modules/auth'
 import axios from 'axios'
+import Product from './modules/product'
+import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  modules: { Auth },
+  modules: { Auth, Product },
   state: {
     dataDetail: {},
     dataDelivery: {},
@@ -97,5 +99,10 @@ export default new Vuex.Store({
       })
     }
   },
-  getters: {}
+  getters: {},
+  plugins: [
+    createPersistedState({
+      paths: ['Auth.user']
+    })
+  ]
 })

@@ -9,7 +9,6 @@ export default {
     setUser(state, payload) {
       state.user = payload
       state.token = payload.token
-      localStorage.setItem('user', JSON.stringify(state.user))
     },
     delUser(state) {
       state.user = {}
