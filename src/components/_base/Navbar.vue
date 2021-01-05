@@ -40,7 +40,6 @@
                 alt=""
               />
             </template>
-            <button @click="handleLogout">Keluar</button>
             <b-dropdown-item href="#">Profile</b-dropdown-item>
             <b-dropdown-item @click="handleLogout">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>

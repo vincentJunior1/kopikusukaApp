@@ -7,6 +7,14 @@
       </span>
       <b-button to="/register" class="sign-up">Sign Up</b-button>
     </div>
+    <b-alert
+      class="notif-pass"
+      v-model="wrongPassword"
+      variant="danger"
+      dismissible
+    >
+      {{ errorMessage }}
+    </b-alert>
     <div class="login-form">
       <h2 class="login-type">login</h2>
       <b-form @submit.prevent="onSubmit" @reset.prevent="onReset">
@@ -49,7 +57,9 @@ export default {
       form: {
         user_email: '',
         user_password: ''
-      }
+      },
+      wrongPassword: false,
+      errorMessage: ''
     }
   },
   methods: {
@@ -61,8 +71,8 @@ export default {
           this.$router.push('/')
         })
         .catch(err => {
-          console.log(err)
-          alert(err.data.message)
+          this.errorMessage = err.data.message
+          this.wrongPassword = true
         })
     },
     onReset() {
@@ -76,6 +86,11 @@ export default {
 </script>
 
 <style scoped>
+.notif-pass {
+  position: absolute;
+  right: 0px;
+  max-width: 400px;
+}
 .login-detail {
   background-color: white;
 }

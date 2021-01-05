@@ -222,14 +222,14 @@ export default {
       } = this.form
       const data = new FormData()
       data.append('product_name', product_name)
-      data.append('product_prices', product_price)
+      data.append('product_price', product_price)
       data.append('product_desc', product_desc)
       data.append('size_id', size_id)
       data.append('category_id', category_id)
       data.append('delivery_method_id', delivery_method_id)
       data.append('product_image', product_image)
       data.append('product_status', product_status)
-      this.postProduct(this.form)
+      this.postProduct(data)
         .then(result => {
           console.log(result)
           this.$router.push('/product')
