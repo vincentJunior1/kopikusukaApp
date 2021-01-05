@@ -156,7 +156,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'formProduct',
   props: ['getData'],
@@ -172,9 +172,13 @@ export default {
         product_desc: '',
         quantityProduct: 0,
         delivery_method_id: [],
+        product_image: '',
         product_status: 1
       }
     }
+  },
+  computed: {
+    ...mapGetters(['getImageProduct'])
   },
   created() {
     console.log(this.quantityProduct)
@@ -205,6 +209,26 @@ export default {
       this.form.delivery_method = []
     },
     getAllData() {
+      this.form.product_image = this.getImageProduct
+      const {
+        product_name,
+        product_price,
+        product_status,
+        product_desc,
+        category_id,
+        size_id,
+        delivery_method_id,
+        product_image
+      } = this.form
+      const data = new FormData()
+      data.append('product_name', product_name)
+      data.append('product_prices', product_price)
+      data.append('product_desc', product_desc)
+      data.append('size_id', size_id)
+      data.append('category_id', category_id)
+      data.append('delivery_method_id', delivery_method_id)
+      data.append('product_image', product_image)
+      data.append('product_status', product_status)
       this.postProduct(this.form)
         .then(result => {
           console.log(result)

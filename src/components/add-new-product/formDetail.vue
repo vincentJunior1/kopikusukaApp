@@ -11,7 +11,12 @@
         alt=""
       />
     </div>
-    <b-button class="take-picture-button">Take a picture</b-button>
+    <input
+      type="file"
+      class="take-picture-button"
+      @change="handleFile"
+      placeholder="Take a picture"
+    />
     <b-button class="choose-button">Choose from gallery</b-button>
     <div class="delivery">
       <p class="delivery-method">Delivery Hour :</p>
@@ -43,6 +48,7 @@
   </div>
 </template>
 <script>
+import { mapMutations } from 'vuex'
 export default {
   name: 'formDetail',
   data() {
@@ -69,12 +75,16 @@ export default {
     }
   },
   created() {
-    console.log(this.quantity)
+    console.log(this.product_image)
   },
   methods: {
+    ...mapMutations(['imageSave']),
     getData(event) {
       this.quantity = event.target.value
       this.$root.$emit('dataQuantity', this.quantity)
+    },
+    handleFile(event) {
+      this.imageSave(event.target.files[0])
     }
   }
 }

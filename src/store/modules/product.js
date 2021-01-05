@@ -4,13 +4,21 @@ export default {
     product: [],
     totalRows: null,
     limit: 4,
-    page: 1
+    page: 1,
+    product_image: ''
   },
   mutations: {
     setProduct(state, payload) {
       state.product = payload.data
       state.totalRows = payload.pagination.totalData
       console.log(state.product)
+    },
+    changePage(state, payload) {
+      state.page = payload
+    },
+    imageSave(state, payload) {
+      state.product_image = payload
+      console.log(state.product_image)
     }
   },
   actions: {
@@ -46,6 +54,9 @@ export default {
     },
     getTotalRowsProduct(state) {
       return state.totalRows
+    },
+    getImageProduct(state) {
+      return state.product_image
     }
   }
 }

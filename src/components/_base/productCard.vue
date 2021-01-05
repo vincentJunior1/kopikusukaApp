@@ -1,10 +1,6 @@
 <template>
   <div class="product-card">
-    <b-button
-      class="btn-add-new"
-      variant="danger"
-      v-if="user.user_role == 1"
-      to="/addNewProduct"
+    <b-button class="btn-add-new" variant="danger" to="/addNewProduct"
       >Add Product</b-button
     >
     <b-row class="text-center menu-short">
@@ -36,27 +32,22 @@
         />
         <p class="product-title">{{ item.product_name }}</p>
         <p class="product-price">Rp.{{ item.product_price }}</p>
-        <b-button
-          class="btn-delete"
-          variant="danger"
-          v-if="user.user_role === 1"
-          >X</b-button
-        >
+        <b-button class="btn-delete" variant="danger">X</b-button>
         <b-button
           class="btn-update"
           @click="productEdit(item.product_id)"
           variant="info"
-          v-if="user.user_role === 1"
           >U</b-button
         >
       </div>
-      <b-pagination
-        v-model="currentPage"
-        :total-rows="rows"
-        :per-page="limit"
-        @change="handlePageChange"
-      ></b-pagination>
     </b-row>
+    <b-pagination
+      class="pagination"
+      v-model="currentPage"
+      :total-rows="rows"
+      :per-page="limit"
+      @change="handlePageChange"
+    ></b-pagination>
   </div>
 </template>
 
@@ -89,7 +80,7 @@
 </style>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
   props: ['dataProduct'],
   data() {
@@ -106,9 +97,6 @@ export default {
       limit: 'getLimitProduct',
       rows: 'getTotalRowsProduct'
     })
-    // rows() {
-    //   return this.totalRows
-    // }
   },
   created() {
     this.getProduct()
@@ -118,7 +106,7 @@ export default {
   },
   methods: {
     ...mapActions(['getProduct']),
-    ...mapState(['token']),
+    ...mapMutations(['changePage']),
     productDetail(product_id) {
       this.$router.push({ name: 'productDetail', params: { id: product_id } })
     },
@@ -130,7 +118,7 @@ export default {
       this.$router.push({ name: 'productEdit', params: { id: product_id } })
     },
     handlePageChange(numberPage) {
-      this.page = numberPage
+      this.changePage(numberPage)
       this.getProduct()
     }
   }
