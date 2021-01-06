@@ -110,8 +110,8 @@ export default {
     saveEdit(product) {
       this.saveEditProduct(product)
         .then(result => {
-          console.log(result)
-          console.log('sukses')
+          console.log(result.response)
+          this.$router.push('/product')
         })
         .catch(err => {
           console.log(err)

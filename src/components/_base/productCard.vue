@@ -95,7 +95,6 @@ export default {
   },
   created() {
     this.getProduct()
-    this.getSortingDrink()
   },
   methods: {
     ...mapActions(['getProduct']),

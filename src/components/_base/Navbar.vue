@@ -17,9 +17,11 @@
 
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
-          <b-nav-form class="search-container">
+          <b-nav-form @submit.prevent="searchProduct" class="search-container">
             <b-form-input
               size="sm"
+              :disabled="path != 'Product'"
+              v-model="search"
               class="mr-sm-2 search-product"
               placeholder="Search"
             ></b-form-input>
@@ -53,12 +55,24 @@
 import { mapActions } from 'vuex'
 export default {
   name: 'Navbar',
+  data() {
+    return {
+      path: '',
+      search: ''
+    }
+  },
   methods: {
     ...mapActions(['logout']),
+    searchProduct() {
+      console.log(this.search)
+    },
     handleLogout() {
       console.log('anda berhasil logout')
       this.logout()
     }
+  },
+  created() {
+    this.path = this.$router.currentRoute.name
   }
 }
 </script>

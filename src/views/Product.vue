@@ -8,7 +8,7 @@
         </b-col>
         <b-col sm="8">
           <b-row sm="12" style="display:inline" class="text-center">
-            <ProductCard @sortingId="getProductSort" />
+            <ProductCard />
           </b-row>
         </b-col>
       </b-row>
