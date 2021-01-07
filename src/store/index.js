@@ -3,12 +3,13 @@ import Vuex from 'vuex'
 import Auth from './modules/auth'
 import axios from 'axios'
 import Product from './modules/product'
+import Cupon from './modules/cupon'
 import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  modules: { Auth, Product },
+  modules: { Auth, Product, Cupon },
   state: {
     dataDetail: {},
     dataDelivery: {},
@@ -99,7 +100,11 @@ export default new Vuex.Store({
       })
     }
   },
-  getters: {},
+  getters: {
+    setDetailProduct(state) {
+      return state.dataDetail
+    }
+  },
   plugins: [
     createPersistedState({
       paths: ['Auth.user']

@@ -1,6 +1,9 @@
 <template>
   <div class="cupon-container">
-    <p class="promo-title">Promo Today</p>
+    <p class="promo-title" style="position:relative;">Promo Today</p>
+    <b-button class="add-new btn-danger" to="/addnewcupon"
+      >Add New Cupon</b-button
+    >
     <p class="promo-desc">
       Coupons will be updated every weeks. Check them out!
     </p>
@@ -18,11 +21,22 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
-  props: ['dataCupon']
+  props: ['dataCupon'],
+  computed: {
+    ...mapGetters({ user: 'setUser' })
+  }
 }
 </script>
 <style scoped>
+.add-new {
+  position: absolute;
+  top: 100px;
+  left: 15px;
+  border-radius: 5px;
+  outline: none !important;
+}
 .scroll {
   position: relative;
   overflow-y: scroll;

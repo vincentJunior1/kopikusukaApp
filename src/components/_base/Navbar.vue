@@ -63,8 +63,9 @@ export default {
   },
   methods: {
     ...mapActions(['logout']),
+    ...mapActions(['searchProducts']),
     searchProduct() {
-      console.log(this.search)
+      this.searchProducts(this.search)
     },
     handleLogout() {
       console.log('anda berhasil logout')

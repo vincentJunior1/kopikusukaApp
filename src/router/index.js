@@ -9,6 +9,7 @@ import Login from '../views/auth/login.vue'
 import EditProduct from '../views/ProductEdit.vue'
 import Register from '../views/auth/register.vue'
 import Payment from '../views/Payment.vue'
+import Cupon from '../views/AddNewCupon.vue'
 import Store from '../store'
 Vue.use(VueRouter)
 
@@ -61,6 +62,12 @@ const routes = [
     path: '/payment',
     name: 'Payment',
     component: Payment,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/addnewcupon',
+    name: 'Cupon',
+    component: Cupon,
     meta: { requiresAuth: true }
   }
 ]

@@ -3,7 +3,7 @@ export default {
   state: {
     product: [],
     totalRows: null,
-    limit: 16,
+    limit: 12,
     page: 1,
     product_image: ''
   },
@@ -52,6 +52,21 @@ export default {
         axios
           .get(
             `http://localhost:3000/sorting/${payload}?page=${context.state.page}&limit=${context.state.limit}`
+          )
+          .then(result => {
+            context.commit('setProduct', result.data)
+            resolve(result)
+          })
+          .catch(err => {
+            reject(new Error(err))
+          })
+      })
+    },
+    searchProducts(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .get(
+            `http://localhost:3000/product/?search=${payload}&?page=${context.state.page}&limit=${context.state.limit}`
           )
           .then(result => {
             context.commit('setProduct', result.data)

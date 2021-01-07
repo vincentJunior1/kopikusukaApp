@@ -38,7 +38,7 @@
               checked="checked"
               @click="drinkButton"
               :value="1"
-              v-model="form.size_id[0]"
+              v-model="form.size_id"
               :disabled="activeDrink == 0"
             />
             <span class="checkmark"></span>
@@ -51,7 +51,7 @@
               checked="checked"
               @click="drinkButton"
               :value="2"
-              v-model="form.size_id[1]"
+              v-model="form.size_id"
               :disabled="activeDrink == 0"
             />
             <span class="checkmark"></span>
@@ -64,7 +64,7 @@
               @click="drinkButton"
               checked="checked"
               :value="3"
-              v-model="form.size_id[2]"
+              v-model="form.size_id"
               :disabled="activeDrink == 0"
             />
             <span class="checkmark"></span>
@@ -77,7 +77,7 @@
               @click="foodButton"
               checked="checked"
               :value="4"
-              v-model="form.size_id[3]"
+              v-model="form.size_id"
               :disabled="activeFood == 0"
             />
             <span class="checkmark"></span>
@@ -90,7 +90,7 @@
               @click="foodButton"
               checked="checked"
               :value="5"
-              v-model="form.size_id[4]"
+              v-model="form.size_id"
               :disabled="activeFood == 0"
             />
             <span class="checkmark"></span>
@@ -103,7 +103,7 @@
               @click="foodButton"
               checked="checked"
               :value="6"
-              v-model="form.size_id[5]"
+              v-model="form.size_id"
               :disabled="activeFood == 0"
             />
             <span class="checkmark"></span>
@@ -193,12 +193,12 @@ export default {
     drinkButton() {
       this.activeDrink = 1
       this.activeFood = 0
-      this.form.category_id = 2
+      this.form.category_id = 1
     },
     foodButton() {
       this.activeDrink = 0
       this.activeFood = 1
-      this.form.category_id = 1
+      this.form.category_id = 2
     },
     resetButton() {
       this.form.size_id = []
