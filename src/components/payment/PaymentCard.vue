@@ -21,8 +21,24 @@
                     </p>
                     <p class="product-size">{{ item.history_size }}</p>
                   </div>
-                  <p class="product-price">{{ item.product_price }}</p>
+                  <p class="product-price">IDR.{{ item.product_price }}</p>
                 </div>
+              </div>
+              <div class="subtotal-div">
+                <span class="subtotal-title">SubTotal </span>
+                <span class="subtotal">IDR.{{ subtotal }} </span>
+              </div>
+              <div class="tax-div">
+                <span class="tax">Tax</span>
+                <span class="tax">IDR.{{ tax }}</span>
+              </div>
+              <div class="shipping">
+                <span>Shipping</span>
+                <span>{{ shipping }}</span>
+              </div>
+              <div class="Total">
+                <span>Total</span>
+                <span>{{ total }}</span>
               </div>
             </div>
           </b-col>
@@ -50,8 +66,20 @@ export default {
   computed: {
     ...mapGetters({ cart: 'getDataCart' })
   },
+  data() {
+    return {
+      subtotal: 0,
+      tax: 0,
+      shipping: 10000,
+      total: 0
+    }
+  },
   created() {
-    console.log(this.cart)
+    this.cart.forEach(x => {
+      this.subtotal += x.product_price * x.history_detail_quantity
+    })
+    this.tax = this.subtotal * 0.1
+    this.total = this.subtotal + this.tax + this.shipping
   },
   methods: {
     ...mapMutations(['setDataCart']),
