@@ -1,7 +1,10 @@
 <template>
   <div class="cupon-container">
     <p class="promo-title" style="position:relative;">Promo Today</p>
-    <b-button class="add-new btn-danger" to="/addnewcupon"
+    <b-button
+      v-if="user.user_role === 1"
+      class="add-new btn-danger"
+      to="/addnewcupon"
       >Add New Cupon</b-button
     >
     <p class="promo-desc">
@@ -14,6 +17,12 @@
           ><p class="cupon-title">{{ item.cupon_name }}</p>
           <p class="cupon-desc">{{ item.cupon_description }}</p>
         </span>
+        <button v-if="user.user_role === 1" class="delete-cupon btn-danger">
+          X
+        </button>
+        <button v-if="user.user_role === 1" class="update-cupon btn-info">
+          U
+        </button>
       </div>
     </div>
     <b-button xl="12" class="apply-cupon">Apply Coupon</b-button>
@@ -21,21 +30,46 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
-  props: ['dataCupon'],
   computed: {
-    ...mapGetters({ user: 'setUser' })
+    ...mapGetters({ user: 'setUser', dataCupon: 'getCupon' })
+  },
+  created() {
+    this.getCupon()
+  },
+  methods: {
+    ...mapActions(['getCupon'])
   }
 }
 </script>
 <style scoped>
 .add-new {
   position: absolute;
-  top: 100px;
+  bottom: 90px;
+  width: 92%;
+  height: 50px;
   left: 15px;
-  border-radius: 5px;
+  padding-top: 10px;
+  border-radius: 10px;
   outline: none !important;
+}
+.delete-cupon {
+  position: absolute;
+  right: 10px;
+  border-radius: 30px;
+  border: none;
+  width: 30px;
+  height: 30px;
+  color: white;
+}
+.update-cupon {
+  position: relative;
+  right: 10px;
+  border-radius: 30px;
+  border: none;
+  width: 30px;
+  height: 30px;
 }
 .scroll {
   position: relative;

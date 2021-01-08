@@ -5,9 +5,13 @@ export default {
     cupon_discount: 0,
     cupon_started_at: '',
     cupon_ended_at: '',
-    cupon_code: ''
+    cupon_code: '',
+    cupon: []
   },
   mutations: {
+    setDataCupon(state, payload) {
+      state.cupon = payload
+    },
     setCuponImage(state, payload) {
       state.cupon_image = payload
     },
@@ -26,19 +30,35 @@ export default {
   },
   actions: {
     postCupon(_context, payload) {
-      return new Promise(() => {
+      return new Promise((resolve, reject) => {
         axios
           .post('http://localhost:3000/cupon/', payload)
           .then(result => {
-            console.log(result)
+            resolve(result)
           })
           .catch(err => {
-            console.log(err)
+            reject(new Error(err))
+          })
+      })
+    },
+    getCupon(context) {
+      return new Promise((resolve, reject) => {
+        axios
+          .get('http://localhost:3000/cupon')
+          .then(res => {
+            context.commit('setDataCupon', res.data.data)
+            resolve(res)
+          })
+          .catch(error => {
+            reject(new Error(error))
           })
       })
     }
   },
   getters: {
+    getCupon(state) {
+      return state.cupon
+    },
     getCuponImage(state) {
       return state.cupon_image
     },

@@ -22,7 +22,6 @@ import Navbar from '../components/_base/Navbar'
 import Footer from '../components/_base/Footer'
 import Cupon from '../components/_base/Cupon'
 import ProductCard from '../components/_base/productCard'
-import axios from 'axios'
 export default {
   name: 'Product',
   components: {
@@ -57,17 +56,6 @@ export default {
     //       console.log(error.response)
     //     })
     // },
-
-    getCupon() {
-      axios
-        .get('http://localhost:3000/cupon')
-        .then(res => {
-          this.cupon = res.data.data
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    }
     // getProductSort(event) {
     //   axios
     //     .get(

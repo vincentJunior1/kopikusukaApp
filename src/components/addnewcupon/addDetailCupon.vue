@@ -11,7 +11,7 @@
         />
         <p class="label-input">Price :</p>
         <input
-          type="text"
+          type="number"
           class="input-text"
           v-model="form.cupon_price"
           placeholder="Type the normal price"
@@ -169,6 +169,7 @@ export default {
         cupon_discount: 0,
         cupon_started_at: '',
         cupon_ended_at: '',
+        cupon_code: '',
         cupon_status: 1,
         category_id: 0
       }
@@ -179,7 +180,8 @@ export default {
       photo: 'getCuponImage',
       discount: 'getCuponDiscount',
       start: 'getCuponStart',
-      end: 'getCuponEnd'
+      end: 'getCuponEnd',
+      code: 'getCuponCode'
     })
   },
   methods: {
@@ -197,6 +199,7 @@ export default {
       this.form.cupon_discount = this.discount
       this.form.cupon_started_at = this.start
       this.form.cupon_ended_at = this.end
+      this.form.cupon_code = this.code
       let newSize = this.form.size_id.filter(item => item != null)
       let newDelivery = this.form.delivery_method_id.filter(
         item => item != null
@@ -209,6 +212,7 @@ export default {
         cupon_image,
         cupon_started_at,
         cupon_ended_at,
+        cupon_code,
         cupon_status,
         category_id
       } = this.form
@@ -223,8 +227,18 @@ export default {
       data.append('cupon_started_at', cupon_started_at)
       data.append('cupon_ended_at', cupon_ended_at)
       data.append('cupon_status', cupon_status)
+      data.append('cupon_code', cupon_code)
       data.append('category_id', category_id)
       this.postCupon(data)
+        .then(result => {
+          console.log(result)
+          setTimeout(() => {
+            this.$router.push('/')
+          }, 2000)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   }
 }

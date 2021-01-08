@@ -53,6 +53,7 @@
         <b-button
           v-if="user.user_role === 1"
           class="btn-delete"
+          @click="deleteProducts(item.product_id)"
           variant="danger"
           >X</b-button
         >
@@ -99,6 +100,7 @@ export default {
   methods: {
     ...mapActions(['getProduct']),
     ...mapActions(['getSorting']),
+    ...mapActions(['deleteProduct']),
     ...mapMutations(['changePage']),
     productDetail(product_id) {
       this.$router.push({ name: 'productDetail', params: { id: product_id } })
@@ -112,6 +114,15 @@ export default {
     },
     sorting(category) {
       this.getSorting(category)
+    },
+    deleteProducts(id) {
+      this.deleteProduct(id)
+        .then(() => {
+          this.getProduct()
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   }
 }
