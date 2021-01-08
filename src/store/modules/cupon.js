@@ -53,10 +53,23 @@ export default {
             reject(new Error(error))
           })
       })
+    },
+    deleteCupon(_context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .delete('http://localhost:3000/cupon/' + payload)
+          .then(result => {
+            resolve(result)
+          })
+          .catch(err => {
+            console.log(err)
+            reject(new Error(err))
+          })
+      })
     }
   },
   getters: {
-    getCupon(state) {
+    getCupons(state) {
       return state.cupon
     },
     getCuponImage(state) {

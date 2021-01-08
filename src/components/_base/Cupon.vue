@@ -17,7 +17,11 @@
           ><p class="cupon-title">{{ item.cupon_name }}</p>
           <p class="cupon-desc">{{ item.cupon_description }}</p>
         </span>
-        <button v-if="user.user_role === 1" class="delete-cupon btn-danger">
+        <button
+          @click="deleteCupons(item.cupon_id)"
+          v-if="user.user_role === 1"
+          class="delete-cupon btn-danger"
+        >
           X
         </button>
         <button v-if="user.user_role === 1" class="update-cupon btn-info">
@@ -33,20 +37,31 @@
 import { mapActions, mapGetters } from 'vuex'
 export default {
   computed: {
-    ...mapGetters({ user: 'setUser', dataCupon: 'getCupon' })
+    ...mapGetters({ user: 'setUser', dataCupon: 'getCupons' })
   },
   created() {
     this.getCupon()
   },
   methods: {
-    ...mapActions(['getCupon'])
+    ...mapActions(['getCupon']),
+    ...mapActions(['deleteCupon']),
+    deleteCupons(id) {
+      this.deleteCupon(id)
+        .then(result => {
+          console.log(result)
+          this.getCupon()
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
   }
 }
 </script>
 <style scoped>
 .add-new {
   position: absolute;
-  bottom: 90px;
+  bottom: 190px;
   width: 92%;
   height: 50px;
   left: 15px;

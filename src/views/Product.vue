@@ -1,18 +1,20 @@
 <template>
   <div class="product">
     <Navbar />
-    <b-container class="bv-example-row">
-      <b-row class="product-page">
-        <b-col class="cupon-info" sm="4">
-          <Cupon v-bind:dataCupon="cupon"></Cupon>
-        </b-col>
-        <b-col sm="8">
-          <b-row sm="12" style="display:inline" class="text-center">
-            <ProductCard />
-          </b-row>
-        </b-col>
-      </b-row>
-    </b-container>
+    <div class="product-page">
+      <b-container class="bv-example-row">
+        <b-row class="product-page">
+          <b-col class="cupon-info" sm="4">
+            <Cupon v-bind:dataCupon="cupon"></Cupon>
+          </b-col>
+          <b-col sm="8">
+            <b-row sm="12" style="display:inline" class="text-center">
+              <ProductCard />
+            </b-row>
+          </b-col>
+        </b-row>
+      </b-container>
+    </div>
     <Footer />
   </div>
 </template>
@@ -72,3 +74,8 @@ export default {
   }
 }
 </script>
+<style scoped>
+.product-page {
+  height: 1000px;
+}
+</style>
