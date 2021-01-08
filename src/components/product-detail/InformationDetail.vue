@@ -3,42 +3,51 @@
     <div class="process-payment">
       <img src="../../assets/img/proses.png" alt="" />
     </div>
-    <p class="product-name">{{ informationDetail[0].product_name }}</p>
-    <p class="product-prices">IDR {{ informationDetail[0].product_price }}</p>
-    <p class="product-desc">{{ informationDetail[0].product_desc }}</p>
+    <b-alert
+      class="alert-false"
+      v-model="showDismissibleAlert"
+      variant="danger"
+      dismissible
+    >
+      {{ messageAlert }}
+    </b-alert>
+    <p class="product-name">{{ detailProduct[0].product_name }}</p>
+    <p class="product-prices">IDR {{ detailProduct[0].product_price }}</p>
+    <p class="product-desc">{{ detailProduct[0].product_desc }}</p>
     <div class="mb-3">
       <select
         id="Size"
         class="form-control size-pick"
-        v-model="product.size_id"
+        v-model="product.history_size"
       >
         <option disabled selected class="size-option">Select Size</option>
         <option
           class="size-option"
-          v-for="(item, index) in informationDetail[1]"
+          v-for="(item, index) in allSizes"
           :key="index"
-          :value="item.size_id"
+          :value="item.size_type"
           v-show="
-            (item.category_id == informationDetail[0].category_id &&
-              item.size_id == informationDetail[2][0]) ||
-              (item.category_id == informationDetail[0].category_id &&
-                item.size_id == informationDetail[2][1]) ||
-              (item.category_id == informationDetail[0].category_id &&
-                item.size_id == informationDetail[2][2])
+            (item.category_id == detailProduct[0].category_id &&
+              item.size_id == setSize[0]) ||
+              (item.category_id == detailProduct[0].category_id &&
+                item.size_id == setSize[1]) ||
+              (item.category_id == detailProduct[0].category_id &&
+                item.size_id == setSize[2])
           "
           >{{ item.size_type }}</option
         >
       </select>
       <div class="mb-3">
-        <select class="form-control delivery-method">
+        <select class="form-control delivery-method" v-model="product.delivery">
           <option disabled selected>Select Delivery Method</option>
           <option
-            v-for="(item, index) in informationDetail[4]"
+            v-for="(item, index) in setDataDelivery"
             :key="index"
+            :value="item.delivery_method_type"
             v-show="
-              item.delivery_method_id == informationDetail[3][0] ||
-                item.delivery_method_id == informationDetail[3][1] ||
-                item.delivery_method_id == informationDetail[3][2]
+              item.delivery_method_id == setDelivery[0] ||
+                item.delivery_method_id == setDelivery[1] ||
+                item.delivery_method_id == setDelivery[2]
             "
             >{{ item.delivery_method_type }}</option
           >
@@ -56,29 +65,42 @@
           >-</b-button
         >
       </b-form>
-      <b-button class="add-to-cart">Add To Cart</b-button>
+      <b-button class="add-to-cart" @click="addToCart">Add To Cart</b-button>
     </div>
     <b-button class="check-out">Check Out</b-button>
     {{ product }}
   </div>
 </template>
 <script>
+import { mapGetters, mapMutations } from 'vuex'
 export default {
-  props: ['informationDetail'],
+  computed: {
+    ...mapGetters({
+      detailProduct: 'setDetailProduct',
+      setSize: 'setSizeProduct',
+      setDelivery: 'setDeliveryProduct',
+      setDataDelivery: 'setDataDelivery',
+      allSizes: 'setAllSize',
+      dataCart: 'getDataCart'
+    })
+  },
+  created() {
+    this.cart = this.dataCart
+  },
   data() {
     return {
       product: {
-        product_id: this.informationDetail[0].product_id,
-        product_name: this.informationDetail[0].product_name,
-        size_id: '',
-        delivery_method: '',
-        history_detail_status: 1,
-        product_price: this.informationDetail[0].product_price,
-        history_detail_quantity: 0
-      }
+        history_detail_quantity: 0,
+        history_size: '',
+        delivery: ''
+      },
+      cart: [],
+      showDismissibleAlert: false,
+      messageAlert: ''
     }
   },
   methods: {
+    ...mapMutations(['setDataCart']),
     increment() {
       this.product.history_detail_quantity += 1
     },
@@ -86,12 +108,40 @@ export default {
       if (this.product.history_detail_quantity > 0) {
         this.product.history_detail_quantity -= 1
       }
+    },
+    addToCart() {
+      if (this.product.history_detail_quantity == 0) {
+        this.showDismissibleAlert = true
+        this.messageAlert = "Quantity Can't be empty"
+      } else if (this.product.delivery == '') {
+        this.showDismissibleAlert = true
+        this.messageAlert = 'Please Select Delivery Method'
+      } else if (this.product.history_size == '') {
+        this.showDismissibleAlert = true
+        this.messageAlert = 'Please Select Size First'
+      } else {
+        const setCart = {
+          product_name: this.detailProduct[0].product_name,
+          history_size: this.product.history_size,
+          product_image: this.detailProduct[0].product_image,
+          history_detail_quantity: this.product.history_detail_quantity,
+          product_price: this.detailProduct[0].product_price
+        }
+        this.cart = [...this.cart, setCart]
+        this.setDataCart(this.cart)
+        console.log(this.dataCart)
+      }
     }
   }
 }
 </script>
 
 <style scoped>
+.alert-false {
+  position: fixed;
+  top: 100px;
+  right: 100px;
+}
 .information-detail {
   margin-top: 55px;
 }

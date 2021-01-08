@@ -12,7 +12,15 @@
     </p>
     <div class="scroll">
       <div class="cupon" v-for="(item, index) in dataCupon" :key="index">
-        <img class="cupon-image" src="../../assets/img/Promo2.png" alt="" />
+        <img
+          class="cupon-image"
+          :src="
+            item.cupon_image != ''
+              ? 'http://localhost:3000/cupon/' + item.cupon_image
+              : '../../assets/img/Promo2.png'
+          "
+          alt=""
+        />
         <span class="about-cupon"
           ><p class="cupon-title">{{ item.cupon_name }}</p>
           <p class="cupon-desc">{{ item.cupon_description }}</p>
@@ -59,6 +67,10 @@ export default {
 }
 </script>
 <style scoped>
+.cupon-image {
+  margin-top: 5px;
+  border-radius: 30px;
+}
 .add-new {
   position: absolute;
   bottom: 190px;

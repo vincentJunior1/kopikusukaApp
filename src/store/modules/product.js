@@ -5,7 +5,8 @@ export default {
     totalRows: null,
     limit: 12,
     page: 1,
-    product_image: ''
+    product_image: '',
+    dataCart: []
   },
   mutations: {
     setProduct(state, payload) {
@@ -17,6 +18,9 @@ export default {
     },
     imageSave(state, payload) {
       state.product_image = payload
+    },
+    setDataCart(state, payload) {
+      state.dataCart = payload
     }
   },
   actions: {
@@ -93,6 +97,9 @@ export default {
     },
     getImageProduct(state) {
       return state.product_image
+    },
+    getDataCart(state) {
+      return state.dataCart
     }
   }
 }

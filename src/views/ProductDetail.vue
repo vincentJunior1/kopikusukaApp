@@ -3,17 +3,8 @@
     <Navbar />
     <b-container>
       <b-row>
-        <b-col sm="6"><ImageDetail :imageDetail="allProduct"/></b-col>
-        <b-col sm="6" style=""
-          ><InformationDetail
-            :informationDetail="[
-              allProduct,
-              allSize,
-              productSize,
-              productDelivery,
-              allDelivery
-            ]"
-        /></b-col>
+        <b-col sm="6"><ImageDetail /></b-col>
+        <b-col sm="6" style=""><InformationDetail /></b-col>
       </b-row>
     </b-container>
     <Footer />
@@ -26,6 +17,7 @@ import Footer from '../components/_base/Footer'
 import axios from 'axios'
 import ImageDetail from '../components/product-detail/ImageDetail'
 import InformationDetail from '../components/product-detail/InformationDetail'
+import { mapActions } from 'vuex'
 export default {
   name: 'ProductDetail',
   components: {
@@ -35,31 +27,20 @@ export default {
     Footer
   },
   data() {
-    return {
-      allProduct: [],
-      allSize: [],
-      productSize: [],
-      productDelivery: [],
-      allDelivery: []
-    }
+    return {}
   },
   async created() {
     this.getProductDetail(this.$route.params.id)
     this.getSize()
-    this.getDelivery()
+    this.getDataSize()
+    this.getDataDelivery()
   },
   methods: {
+    ...mapActions(['getDataDetail']),
+    ...mapActions(['getDataSize']),
+    ...mapActions(['getDataDelivery']),
     getProductDetail(id) {
-      axios
-        .get(`http://localhost:3000/product/${id}`)
-        .then(res => {
-          this.allProduct = res.data.data[0]
-          this.productSize = this.allProduct.size_id.split(',')
-          this.productDelivery = this.allProduct.delivery_method_id.split(',')
-        })
-        .catch(error => {
-          console.log(error)
-        })
+      this.getDataDetail(id)
     },
     getSize() {
       axios
@@ -69,16 +50,6 @@ export default {
         })
         .catch(error => {
           console.log(error)
-        })
-    },
-    getDelivery() {
-      axios
-        .get('http://localhost:3000/size/delivery/')
-        .then(res => {
-          this.allDelivery = res.data.data
-        })
-        .catch(err => {
-          console.log(err)
         })
     }
   }

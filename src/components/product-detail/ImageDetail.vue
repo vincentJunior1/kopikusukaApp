@@ -2,12 +2,16 @@
   <div class="image-detail">
     <div class="menu-detail">
       <span class="span-menu">Favorite & Promo > </span>
-      <span class="span-product">{{ imageDetail.product_name }}</span>
+      <span class="span-product">{{ setDetailProduct[0].product_name }}</span>
     </div>
     <img
       class="product-detail-image"
       sm="12"
-      src="../../assets/img/coldbrew.png"
+      :src="
+        setDetailProduct[0].product_image == ''
+          ? '../../assets/img/coldbrew.png'
+          : 'http://localhost:3000/' + setDetailProduct[0].product_image
+      "
       alt=""
     />
     <p class="about-delivery">
@@ -17,14 +21,17 @@
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 export default {
-  props: ['imageDetail'],
   data() {
     return {
       showData() {
         console.log(this.imageDetail)
       }
     }
+  },
+  computed: {
+    ...mapGetters(['setDetailProduct'])
   }
 }
 </script>

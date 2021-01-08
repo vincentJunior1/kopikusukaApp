@@ -4,17 +4,19 @@ import Auth from './modules/auth'
 import axios from 'axios'
 import Product from './modules/product'
 import Cupon from './modules/cupon'
+import Payment from './modules/payment'
 import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  modules: { Auth, Product, Cupon },
+  modules: { Auth, Product, Cupon, Payment },
   state: {
     dataDetail: {},
     dataDelivery: {},
     dataDeliveryProduct: [],
-    dataSizeProduct: []
+    dataSizeProduct: [],
+    allSize: []
   },
   mutations: {
     setDetailData(state, payload) {
@@ -32,6 +34,9 @@ export default new Vuex.Store({
       let data
       data = payload.size_id
       state.dataSizeProduct = data.split(',')
+    },
+    setAllSize(state, payload) {
+      state.allSize = payload
     }
   },
   actions: {
@@ -75,11 +80,12 @@ export default new Vuex.Store({
           })
       })
     },
-    getDataSize() {
+    getDataSize(context) {
       return new Promise((resolve, reject) => {
         axios
           .get('http://localhost:3000/size/size/')
           .then(result => {
+            context.commit('setAllSize', result.data.data)
             resolve(result.data.data)
           })
           .catch(err => {
@@ -103,11 +109,23 @@ export default new Vuex.Store({
   getters: {
     setDetailProduct(state) {
       return state.dataDetail
+    },
+    setSizeProduct(state) {
+      return state.dataSizeProduct
+    },
+    setDeliveryProduct(state) {
+      return state.dataDeliveryProduct
+    },
+    setDataDelivery(state) {
+      return state.dataDelivery
+    },
+    setAllSize(state) {
+      return state.allSize
     }
   },
   plugins: [
     createPersistedState({
-      paths: ['Auth.user']
+      paths: ['Auth.user', 'Product.dataCart']
     })
   ]
 })

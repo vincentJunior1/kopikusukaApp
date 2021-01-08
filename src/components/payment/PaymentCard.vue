@@ -7,6 +7,23 @@
             <p class="title-checkout">Checkout Your Item Now!</p>
             <div class="data-cart">
               <p class="order-summary">Order Summary</p>
+              <div class="all-data">
+                <div class="cart" v-for="(item, index) in cart" :key="index">
+                  <img
+                    class="product-image"
+                    :src="'http://localhost:3000/' + item.product_image"
+                    alt=""
+                  />
+                  <div class="inf-product">
+                    <p class="product-name">{{ item.product_name }}</p>
+                    <p class="product-quantity">
+                      x {{ item.history_detail_quantity }}
+                    </p>
+                    <p class="product-size">{{ item.history_size }}</p>
+                  </div>
+                  <p class="product-price">{{ item.product_price }}</p>
+                </div>
+              </div>
             </div>
           </b-col>
           <b-col>
@@ -17,7 +34,9 @@
               <span class="payment-detail">Payment Method</span>
               <div class="payment-method"></div>
             </div>
-            <b-button class="pay-method">Confirm And Pay</b-button>
+            <b-button class="pay-method" @click="paymentButton"
+              >Confirm And Pay</b-button
+            >
           </b-col>
         </b-row>
       </b-container>
@@ -25,8 +44,22 @@
   </div>
 </template>
 <script>
+import { mapGetters, mapMutations } from 'vuex'
 export default {
-  name: 'PaymentCard'
+  name: 'PaymentCard',
+  computed: {
+    ...mapGetters({ cart: 'getDataCart' })
+  },
+  created() {
+    console.log(this.cart)
+  },
+  methods: {
+    ...mapMutations(['setDataCart']),
+    paymentButton() {
+      let carts = []
+      this.setDataCart(carts)
+    }
+  }
 }
 </script>
 <style scoped>
@@ -46,13 +79,14 @@ export default {
 }
 .data-cart {
   width: 90%;
-  height: 700px;
+  height: 900px;
   border-radius: 20px;
   background-color: white;
   box-shadow: 1px 2px 4px black;
   padding-top: 50px;
   padding-left: 40px;
   padding-right: 40px;
+  position: relative;
 }
 .order-summary {
   font-size: 35px;
@@ -108,5 +142,33 @@ export default {
   background-color: #6a4029;
   width: 70% !important;
   font-weight: 500;
+}
+.product-image {
+  width: 82px;
+  height: 90px;
+  border-radius: 30px;
+}
+.cart {
+  position: relative;
+  margin-top: 20px;
+}
+.inf-product {
+  position: absolute;
+  top: 5px;
+  left: 100px;
+  line-height: 15px;
+}
+.product-price {
+  position: absolute;
+  top: 35px;
+  right: 40px;
+}
+.all-data {
+  margin-top: 50px;
+  margin-left: 10px;
+  height: 400px;
+  overflow-y: scroll;
+  padding-bottom: 40px;
+  border-bottom: 1px solid grey;
 }
 </style>
