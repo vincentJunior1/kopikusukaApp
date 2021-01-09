@@ -22,6 +22,7 @@
                     <p class="product-size">{{ item.history_size }}</p>
                   </div>
                   <p class="product-price">IDR.{{ item.product_price }}</p>
+                  <p class="delete-cart" @click="deleteData(index)">Delete</p>
                 </div>
               </div>
               <div class="subtotal-div">
@@ -29,16 +30,16 @@
                 <span class="subtotal">IDR.{{ subtotal }} </span>
               </div>
               <div class="tax-div">
-                <span class="tax">Tax</span>
+                <span class="tax-title">Tax</span>
                 <span class="tax">IDR.{{ tax }}</span>
               </div>
-              <div class="shipping">
-                <span>Shipping</span>
-                <span>{{ shipping }}</span>
+              <div class="shipping-div">
+                <span class="shipping-title">Shipping</span>
+                <span class="shipping">IDR.{{ shipping }}</span>
               </div>
-              <div class="Total">
-                <span>Total</span>
-                <span>{{ total }}</span>
+              <div class="total-div">
+                <span class="total-title">Total</span>
+                <span class="total">IDR.{{ total }}</span>
               </div>
             </div>
           </b-col>
@@ -46,9 +47,37 @@
             <div class="detail">
               <span class="address-detail">Address Details</span>
               <span class="edit-detail">Edit</span>
-              <div class="card-address"></div>
+              <div class="card-address">
+                <p class="user-name">
+                  <strong>Delivery</strong> to {{ user.user_name }}
+                </p>
+                <p class="user-address">{{ user.user_address }}</p>
+                <p class="user-phone">{{ user.user_phone }}</p>
+              </div>
               <span class="payment-detail">Payment Method</span>
-              <div class="payment-method"></div>
+              <div class="payment-method">
+                <div class="choice">
+                  <label class="container"
+                    >Card
+                    <input type="radio" checked="checked" name="radio" />
+                    <span class="checkmark"></span>
+                  </label>
+                </div>
+                <div class="choice">
+                  <label class="container"
+                    >Bank Account
+                    <input type="radio" checked="checked" name="radio" />
+                    <span class="checkmark"></span>
+                  </label>
+                </div>
+                <div class="choice-last">
+                  <label class="container"
+                    >Cash On Delivery
+                    <input type="radio" checked="checked" name="radio" />
+                    <span class="checkmark"></span>
+                  </label>
+                </div>
+              </div>
             </div>
             <b-button class="pay-method" @click="paymentButton"
               >Confirm And Pay</b-button
@@ -64,17 +93,19 @@ import { mapGetters, mapMutations } from 'vuex'
 export default {
   name: 'PaymentCard',
   computed: {
-    ...mapGetters({ cart: 'getDataCart' })
+    ...mapGetters({ cart: 'getDataCart', user: 'setUser' })
   },
   data() {
     return {
       subtotal: 0,
       tax: 0,
       shipping: 10000,
-      total: 0
+      total: 0,
+      modalShow: false
     }
   },
   created() {
+    console.log(this.user)
     this.cart.forEach(x => {
       this.subtotal += x.product_price * x.history_detail_quantity
     })
@@ -86,6 +117,15 @@ export default {
     paymentButton() {
       let carts = []
       this.setDataCart(carts)
+    },
+    openModal() {
+      this.modalShow = true
+    },
+    hideModal() {
+      this.modalShow = false
+    },
+    deleteData(id) {
+      this.cart.splice(id, 1)
     }
   }
 }
@@ -145,7 +185,7 @@ export default {
 .card-address {
   max-width: 70%;
   background-color: white;
-  height: 200px;
+  height: 230px;
   border-radius: 20px;
   margin-bottom: 40px;
 }
@@ -162,6 +202,8 @@ export default {
   border-radius: 20px;
   margin-top: 10px;
   background-color: white;
+  padding-top: 40px;
+  padding-left: 30px;
 }
 .pay-method {
   margin-top: 30px;
@@ -185,6 +227,7 @@ export default {
   top: 5px;
   left: 100px;
   line-height: 15px;
+  font-size: 18px !important;
 }
 .product-price {
   position: absolute;
@@ -199,4 +242,146 @@ export default {
   padding-bottom: 40px;
   border-bottom: 1px solid grey;
 }
+.subtotal-div {
+  margin-top: 20px;
+  position: relative;
+  font-size: 26px;
+}
+.subtotal {
+  position: absolute;
+  right: 0px;
+}
+.subtotal-title {
+  font-weight: 700;
+}
+.tax-div {
+  margin-top: 10px;
+  font-size: 26px;
+  position: relative;
+}
+.tax-title {
+  font-weight: 700;
+}
+.tax {
+  position: absolute;
+  right: 0px;
+}
+.shipping-div {
+  margin-top: 10px;
+  font-size: 26px;
+  position: relative;
+  border-bottom: 1px solid grey;
+}
+.shipping-title {
+  font-weight: 700;
+}
+.shipping {
+  position: absolute;
+  right: 0px;
+}
+.total-div {
+  margin-top: 10px;
+  font-size: 32px;
+  position: relative;
+}
+.total-title {
+  font-weight: 700;
+}
+.total {
+  position: absolute;
+  right: 0px;
+}
+.card-address {
+  padding-top: 15px;
+  padding-left: 30px;
+  padding-right: 20px;
+}
+.user-name {
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgb(196, 196, 196);
+}
+.user-address {
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgb(196, 196, 196);
+}
+.choice {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgb(196, 196, 196);
+}
+.choice-last {
+  margin-bottom: 30px;
+}
+.delete-cart {
+  position: absolute;
+  bottom: 0px;
+  right: 40px;
+  font-size: 16px;
+  color: red;
+}
+
+/* Custom Checkbox */
+.container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Create a custom radio button */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+  border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: #2196f3;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+  content: '';
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.container .checkmark:after {
+  top: 9px;
+  left: 9px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: white;
+}
+/* costum checkbox */
 </style>
