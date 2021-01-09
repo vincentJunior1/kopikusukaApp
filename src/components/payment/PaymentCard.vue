@@ -31,15 +31,15 @@
               </div>
               <div class="tax-div">
                 <span class="tax-title">Tax</span>
-                <span class="tax">IDR.{{ tax }}</span>
+                <span class="tax">IDR.{{ payment.history_tax }}</span>
               </div>
               <div class="shipping-div">
                 <span class="shipping-title">Shipping</span>
-                <span class="shipping">IDR.{{ shipping }}</span>
+                <span class="shipping">IDR.{{ payment.delivery_price }}</span>
               </div>
               <div class="total-div">
                 <span class="total-title">Total</span>
-                <span class="total">IDR.{{ total }}</span>
+                <span class="total">IDR.{{ payment.history_total }}</span>
               </div>
             </div>
           </b-col>
@@ -59,21 +59,39 @@
                 <div class="choice">
                   <label class="container"
                     >Card
-                    <input type="radio" checked="checked" name="radio" />
+                    <input
+                      type="radio"
+                      value="cash"
+                      v-model="payment.payment_method"
+                      checked="checked"
+                      name="radio"
+                    />
                     <span class="checkmark"></span>
                   </label>
                 </div>
                 <div class="choice">
                   <label class="container"
                     >Bank Account
-                    <input type="radio" checked="checked" name="radio" />
+                    <input
+                      type="radio"
+                      value="Bank Account"
+                      v-model="payment.payment_method"
+                      checked="checked"
+                      name="radio"
+                    />
                     <span class="checkmark"></span>
                   </label>
                 </div>
                 <div class="choice-last">
                   <label class="container"
                     >Cash On Delivery
-                    <input type="radio" checked="checked" name="radio" />
+                    <input
+                      type="radio"
+                      value="Cash On Delivery"
+                      v-model="payment.payment_method"
+                      checked="checked"
+                      name="radio"
+                    />
                     <span class="checkmark"></span>
                   </label>
                 </div>
@@ -89,7 +107,7 @@
   </div>
 </template>
 <script>
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 export default {
   name: 'PaymentCard',
   computed: {
@@ -98,24 +116,34 @@ export default {
   data() {
     return {
       subtotal: 0,
-      tax: 0,
-      shipping: 10000,
       total: 0,
-      modalShow: false
+      modalShow: false,
+      payment: {
+        payment_method: '',
+        delivery_method_id: 0,
+        delivery_price: 10000,
+        history_total: 0,
+        history_tax: 0
+      }
     }
   },
   created() {
     this.cart.forEach(x => {
       this.subtotal += x.product_price * x.history_detail_quantity
     })
-    this.tax = this.subtotal * 0.1
-    this.total = this.subtotal + this.tax + this.shipping
+    this.payment.history_tax = this.subtotal * 0.1
+    this.payment.history_total =
+      this.subtotal + this.payment.history_tax + this.payment.delivery_price
   },
   methods: {
     ...mapMutations(['setDataCart']),
+    ...mapActions(['postPayment']),
     paymentButton() {
-      let carts = []
-      this.setDataCart(carts)
+      let detailPayment = []
+      this.cart[0].delivery_method_id = this.payment.delivery_method_id
+      this.total = this.payment.history_subtotal
+      detailPayment = [this.payment, ...this.cart]
+      this.postPayment(detailPayment)
     },
     openModal() {
       this.modalShow = true
@@ -135,6 +163,8 @@ export default {
       this.subtotal =
         this.subtotal -
         recentCart[0].product_price * recentCart[0].history_detail_quantity
+      this.tax = this.subtotal * 0.1
+      this.total = this.subtotal + this.tax + this.shipping
     }
   }
 }
