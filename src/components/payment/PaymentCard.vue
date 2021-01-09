@@ -105,7 +105,6 @@ export default {
     }
   },
   created() {
-    console.log(this.user)
     this.cart.forEach(x => {
       this.subtotal += x.product_price * x.history_detail_quantity
     })
@@ -124,8 +123,18 @@ export default {
     hideModal() {
       this.modalShow = false
     },
+    paymentMath() {
+      this.cart.forEach(x => {
+        this.subtotal += x.product_price * x.history_detail_quantity
+      })
+      this.tax = this.subtotal * 0.1
+      this.total = this.subtotal + this.tax + this.shipping
+    },
     deleteData(id) {
-      this.cart.splice(id, 1)
+      let recentCart = this.cart.splice(id, 1)
+      this.subtotal =
+        this.subtotal -
+        recentCart[0].product_price * recentCart[0].history_detail_quantity
     }
   }
 }

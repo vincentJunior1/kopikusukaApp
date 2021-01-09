@@ -11,6 +11,14 @@
     >
       {{ messageAlert }}
     </b-alert>
+    <b-alert
+      class="alert-false"
+      v-model="addToCard"
+      variant="success"
+      dismissible
+    >
+      Success Added {{ detailProduct[0].product_name }} to card
+    </b-alert>
     <p class="product-name">{{ detailProduct[0].product_name }}</p>
     <p class="product-prices">IDR {{ detailProduct[0].product_price }}</p>
     <p class="product-desc">{{ detailProduct[0].product_desc }}</p>
@@ -96,7 +104,8 @@ export default {
       },
       cart: [],
       showDismissibleAlert: false,
-      messageAlert: ''
+      messageAlert: '',
+      addToCard: false
     }
   },
   methods: {
@@ -129,7 +138,10 @@ export default {
         }
         this.cart = [...this.cart, setCart]
         this.setDataCart(this.cart)
-        console.log(this.dataCart)
+        this.addToCard = true
+        setTimeout(() => {
+          this.$router.push('/product')
+        }, 3000)
       }
     }
   }
