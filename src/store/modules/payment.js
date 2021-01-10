@@ -4,15 +4,15 @@ export default {
   mutations: {},
   actions: {
     postPayment(_context, payload) {
-      // resolve, reject
-      return new Promise(() => {
+      console.log(payload)
+      return new Promise((resolve, reject) => {
         axios
           .post('http://localhost:3000/payment/', payload)
           .then(result => {
-            console.log(result)
+            resolve(result)
           })
           .catch(err => {
-            console.log(err)
+            reject(new Error(err))
           })
       })
     }

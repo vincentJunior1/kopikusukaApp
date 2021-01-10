@@ -1,6 +1,14 @@
 <template>
   <div class="payment-card">
     <div class="jumbotron">
+      <b-alert
+        v-model="showMessage"
+        class="payment-notif"
+        variant="success"
+        dismissible
+      >
+        Your Order Will Be Proccess
+      </b-alert>
       <b-container>
         <b-row>
           <b-col>
@@ -117,7 +125,8 @@ export default {
     return {
       subtotal: 0,
       total: 0,
-      modalShow: false,
+      showMessage: false,
+      message: '',
       payment: {
         payment_method: '',
         delivery_method_id: 0,
@@ -144,6 +153,15 @@ export default {
       this.total = this.payment.history_subtotal
       detailPayment = [this.payment, ...this.cart]
       this.postPayment(detailPayment)
+        .then(() => {
+          this.message = 'Your Order Will Be Processed'
+          this.showMessage = true
+          let carts = []
+          this.setDataCart(carts)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
     openModal() {
       this.modalShow = true
@@ -357,6 +375,12 @@ export default {
   right: 40px;
   font-size: 16px;
   color: red;
+}
+.payment-notif {
+  width: 20%;
+  position: absolute;
+  top: 200px;
+  right: 100px;
 }
 
 /* Custom Checkbox */
