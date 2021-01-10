@@ -5,7 +5,10 @@ import axios from 'axios'
 import Product from './modules/product'
 import Cupon from './modules/cupon'
 import Payment from './modules/payment'
+import dotenv from 'dotenv'
 import createPersistedState from 'vuex-persistedstate'
+
+dotenv.config()
 
 Vue.use(Vuex)
 
@@ -43,7 +46,7 @@ export default new Vuex.Store({
     postProduct(_context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .post('http://localhost:3000/product/', payload)
+          .post(`http://${process.env.VUE_APP_ROOT_URL}/product/`, payload)
           .then(result => {
             resolve(result)
           })
@@ -55,7 +58,7 @@ export default new Vuex.Store({
     getDataDetail(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .get(`http://localhost:3000/product/${payload}`)
+          .get(`http://${process.env.VUE_APP_ROOT_URL}/product/${payload}`)
           .then(result => {
             context.commit('setDetailData', result.data.data)
             context.commit('setValidationDelivery', result.data.data[0])
@@ -70,7 +73,7 @@ export default new Vuex.Store({
     getDataDelivery(context) {
       return new Promise((resolve, reject) => {
         axios
-          .get('http://localhost:3000/size/delivery/')
+          .get(`http://${process.env.VUE_APP_ROOT_URL}/size/delivery/`)
           .then(result => {
             context.commit('setDeliveryData', result.data.data)
             resolve(result)
@@ -83,7 +86,7 @@ export default new Vuex.Store({
     getDataSize(context) {
       return new Promise((resolve, reject) => {
         axios
-          .get('http://localhost:3000/size/size/')
+          .get(`http://${process.env.VUE_APP_ROOT_URL}/size/size/`)
           .then(result => {
             context.commit('setAllSize', result.data.data)
             resolve(result.data.data)
@@ -96,7 +99,10 @@ export default new Vuex.Store({
     saveEditProduct(_context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .patch(`http://localhost:3000/product/${payload.product_id}`, payload)
+          .patch(
+            `http://${process.env.VUE_APP_ROOT_URL}/product/${payload.product_id}`,
+            payload
+          )
           .then(result => {
             resolve(result)
           })

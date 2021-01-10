@@ -42,7 +42,7 @@
                 alt=""
               />
             </template>
-            <b-dropdown-item href="#">Profile</b-dropdown-item>
+            <b-dropdown-item to="/profile">Profile</b-dropdown-item>
             <b-dropdown-item @click="handleLogout">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>

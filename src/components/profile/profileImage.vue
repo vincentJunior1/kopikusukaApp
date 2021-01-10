@@ -1,0 +1,113 @@
+<template>
+  <div class="profile-image">
+    <div class="image">
+      <img
+        class="image-profile"
+        src="../../assets/img/profile-pic.png"
+        alt=""
+      />
+      <p class="fullname">{{ user.user_firstname }} {{ user.user_lastname }}</p>
+      <p class="email">{{ user.user_email }}</p>
+      <input type="file" @change="changeImage" id="fileUpload" hidden />
+      <button class="image-user" @click="chooseFile">{{ photo }}</button>
+      <button class="edit-password">Edit Password</button>
+      <p class="desc-change">Do You Want To Save The Changes</p>
+      <button class="save-change" @click="saveProfile">Save Changes</button>
+      <button class="cancel-change">Cancel</button>
+      <button class="edit-password">Log out</button>
+    </div>
+  </div>
+</template>
+
+<script>
+import { mapActions, mapGetters } from 'vuex'
+export default {
+  name: 'profileImage',
+  data() {
+    return {
+      photo: 'Choose Photo',
+      image: ''
+    }
+  },
+  computed: {
+    ...mapGetters({ user: 'setUser' })
+  },
+  methods: {
+    ...mapActions(['editProfiles']),
+    changeImage(event) {
+      this.image = event.target.files[0]
+      this.photo = this.image.name
+    },
+    chooseFile() {
+      document.getElementById('fileUpload').click()
+    },
+    saveProfile() {
+      let newUser = { ...this.user, ...{ user_image: this.image } }
+      this.editProfiles(newUser)
+    }
+  }
+}
+</script>
+
+<style scoped>
+.fullname {
+  margin-top: 25px;
+  font-size: 24px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+.email {
+  margin-top: -10px;
+}
+.image {
+  text-align: center;
+}
+.image-profile {
+  border-radius: 100px;
+}
+.image-user {
+  width: 70%;
+  height: 50px;
+  border: none;
+  border-radius: 10px;
+  background-color: #ffba33;
+  color: #6a4029;
+  font-weight: 700;
+}
+.edit-password {
+  margin-top: 50px;
+  width: 70%;
+  height: 50px;
+  border: 1px solid grey;
+  border-radius: 30px;
+  background-color: white;
+  font-weight: 700;
+}
+.desc-change {
+  margin-top: 40px;
+  font-weight: 700;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+  font-size: 26px;
+}
+.save-change {
+  width: 70%;
+  height: 50px;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  background-color: #6a4029;
+  font-weight: 700;
+}
+.cancel-change {
+  margin-top: 20px;
+  width: 70%;
+  height: 50px;
+  border: none;
+  border-radius: 10px;
+  background-color: #ffba33;
+  color: #6a4029;
+  font-weight: 700;
+}
+</style>

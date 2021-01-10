@@ -42,6 +42,11 @@ export default {
           })
       })
     },
+    editProfiles(_context, payload) {
+      return new Promise(() => {
+        console.log(payload)
+      })
+    },
     logout(context) {
       localStorage.removeItem('token')
       context.commit('delUser')
