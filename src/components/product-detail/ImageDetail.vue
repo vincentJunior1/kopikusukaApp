@@ -9,7 +9,7 @@
       sm="12"
       :src="
         setDetailProduct[0].product_image == ''
-          ? '../../assets/img/coldbrew.png'
+          ? require('../../assets/img/coldbrew.png')
           : 'http://localhost:3000/' + setDetailProduct[0].product_image
       "
       alt=""

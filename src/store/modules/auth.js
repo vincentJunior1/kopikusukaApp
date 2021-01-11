@@ -46,6 +46,7 @@ export default {
     },
     editProfiles(_context, payload) {
       return new Promise(() => {
+        console.log(payload)
         axios
           .patch(
             `http://${process.env.VUE_APP_ROOT_URL}/user/editProfile`,

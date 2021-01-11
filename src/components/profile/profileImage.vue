@@ -43,7 +43,34 @@ export default {
     },
     saveProfile() {
       let newUser = { ...this.user, ...{ user_image: this.image } }
-      this.editProfiles(newUser)
+      const {
+        user_id,
+        user_name,
+        user_email,
+        user_address,
+        user_firstname,
+        user_lastname,
+        user_birthday,
+        user_image,
+        user_gender,
+        user_role,
+        user_phone,
+        user_status
+      } = newUser
+      const data = new FormData()
+      data.append('user_id', user_id)
+      data.append('user_name', user_name)
+      data.append('user_email', user_email)
+      data.append('user_address', user_address)
+      data.append('user_firstname', user_firstname)
+      data.append('user_lastname', user_lastname)
+      data.append('user_birthday', user_birthday)
+      data.append('user_image', user_image)
+      data.append('user_gender', user_gender)
+      data.append('user_role', user_role)
+      data.append('user_phone', user_phone)
+      data.append('user_status', user_status)
+      this.editProfiles(data)
     }
   }
 }
