@@ -63,7 +63,7 @@
             <input
               class="radio"
               type="radio"
-              v-if="form.user_gender === 1"
+              v-bind="form.user_gender === 1"
               v-model="form.user_gender"
               value="1"
               checked="checked"
@@ -78,7 +78,7 @@
             <input
               class="radio"
               type="radio"
-              v-if="form.user_gender === 0"
+              v-bind="form.user_gender === 0"
               v-model="form.user_gender"
               value="0"
               checked="checked"

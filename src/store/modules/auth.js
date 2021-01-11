@@ -1,5 +1,7 @@
 import axios from 'axios'
 import router from '../../router'
+import dotenv from 'dotenv'
+dotenv.config()
 export default {
   state: {
     user: {},
@@ -44,7 +46,17 @@ export default {
     },
     editProfiles(_context, payload) {
       return new Promise(() => {
-        console.log(payload)
+        axios
+          .patch(
+            `http://${process.env.VUE_APP_ROOT_URL}/user/editProfile`,
+            payload
+          )
+          .then(result => {
+            console.log(result)
+          })
+          .catch(err => {
+            console.log.log(err)
+          })
       })
     },
     logout(context) {
