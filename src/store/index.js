@@ -5,6 +5,7 @@ import axios from 'axios'
 import Product from './modules/product'
 import Cupon from './modules/cupon'
 import Payment from './modules/payment'
+import Dashboard from './modules/dashboard'
 import dotenv from 'dotenv'
 import createPersistedState from 'vuex-persistedstate'
 
@@ -13,7 +14,7 @@ dotenv.config()
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  modules: { Auth, Product, Cupon, Payment },
+  modules: { Auth, Product, Cupon, Payment, Dashboard },
   state: {
     dataDetail: {},
     dataDelivery: {},

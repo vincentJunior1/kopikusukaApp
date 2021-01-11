@@ -11,7 +11,15 @@
         <b-navbar-nav class="ml-auto">
           <b-nav-item class="nav-menu" to="/">Home</b-nav-item>
           <b-nav-item class="nav-menu" to="/product">Product</b-nav-item>
-          <b-nav-item class="nav-menu" to="/payment">Your Card</b-nav-item>
+          <b-nav-item class="nav-menu" v-if="user.user_role === 0" to="/payment"
+            >Your Card</b-nav-item
+          >
+          <b-nav-item
+            class="nav-menu"
+            v-if="user.user_role === 1"
+            to="/dashboard"
+            >Dashboard</b-nav-item
+          >
           <b-nav-item class="nav-menu" to="/history">History</b-nav-item>
         </b-navbar-nav>
 
@@ -52,7 +60,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'Navbar',
   data() {
@@ -74,6 +82,9 @@ export default {
   },
   created() {
     this.path = this.$router.currentRoute.name
+  },
+  computed: {
+    ...mapGetters({ user: 'setUser' })
   }
 }
 </script>

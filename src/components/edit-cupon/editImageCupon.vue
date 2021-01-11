@@ -4,7 +4,8 @@
     <span class="page-name"> > Edit Promo</span>
     <div class="discount-card">
       <div class="promo-card">
-        <button class="edit-images">✏️</button>
+        <input type="file" @change="fileImage" id="fileUpload" hidden />
+        <button @click="imageUpload" class="edit-images">✏️</button>
         <img
           class="promo-image"
           :src="
@@ -28,8 +29,13 @@
     </div>
     <div class="date-promo">
       <p class="date-expired">Expired Date</p>
-      <input class="date" type="date" :value="dateStarted" />
-      <input class="date" type="date" :value="dateEnded" />
+      <input
+        class="date"
+        type="date"
+        @change="timeStart"
+        :value="dateStarted"
+      />
+      <input class="date" type="date" @change="timeEnd" :value="dateEnded" />
     </div>
     <div class="input-promo">
       <p class="codes-promo">Code Promo</p>
@@ -43,7 +49,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import moment from 'moment'
 export default {
   name: 'editImageCupon',
@@ -60,11 +66,28 @@ export default {
     return {
       dateEnded: '',
       dateStarted: '',
-      endedAt: ''
+      endedAt: '',
+      image: ''
     }
   },
   computed: {
     ...mapGetters({ cupon: 'getCuponDetail' })
+  },
+  methods: {
+    ...mapMutations(['setCuponImage']),
+    imageUpload() {
+      document.getElementById('fileUpload').click()
+    },
+    fileImage(event) {
+      this.image = event.target.files[0]
+      this.setCuponImage(this.image)
+    },
+    timeStart(event) {
+      this.cupon.cupon_started_at = event.target.value
+    },
+    timeEnd(event) {
+      this.cupon.cupon_ended_at = event.target.value
+    }
   }
 }
 </script>

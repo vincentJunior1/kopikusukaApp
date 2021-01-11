@@ -29,32 +29,74 @@
         </p>
         <label class="container"
           >Reguler
-          <input type="radio" class="size-id" checked="checked" :value="1" />
+          <input
+            type="radio"
+            class="size-id"
+            v-model="sizeId[0]"
+            @click="drinkButton"
+            checked="checked"
+            :value="1"
+          />
           <span class="checkmark"></span>
         </label>
         <label class="container"
           >Medium
-          <input type="radio" class="size-id" checked="checked" :value="2" />
+          <input
+            type="radio"
+            class="size-id"
+            v-model="sizeId[1]"
+            @click="drinkButton"
+            checked="checked"
+            :value="2"
+          />
           <span class="checkmark"></span>
         </label>
         <label class="container"
           >Large
-          <input type="radio" class="size-id" checked="checked" :value="3" />
+          <input
+            type="radio"
+            class="size-id"
+            v-model="sizeId[2]"
+            @click="drinkButton"
+            checked="checked"
+            :value="3"
+          />
           <span class="checkmark"></span>
         </label>
         <label class="container"
           >250 Gram
-          <input type="radio" class="size-id" checked="checked" :value="4" />
+          <input
+            type="radio"
+            class="size-id"
+            v-model="sizeId[3]"
+            @click="foodButton"
+            checked="checked"
+            :value="4"
+          />
           <span class="checkmark"></span>
         </label>
         <label class="container"
           >500 Gram
-          <input type="radio" class="size-id" checked="checked" :value="5" />
+          <input
+            type="radio"
+            class="size-id"
+            v-model="sizeId[4]"
+            @click="foodButton"
+            checked="checked"
+            :value="5"
+          />
           <span class="checkmark"></span>
         </label>
         <label class="container"
           >750 Gram
-          <input type="radio" class="size-id" checked="checked" :value="6" />
+          <input
+            type="radio"
+            class="size-id"
+            v-model="sizeId[5]"
+            @click="foodButton"
+            checked="checked"
+            :value="6"
+          />
           <span class="checkmark"></span>
         </label>
         <p class="label-input" style="margin-top:20px;">
@@ -69,7 +111,7 @@
             type="radio"
             class="size-id"
             checked="checked"
-            v-model="form.delivery_method_id[0]"
+            v-model="deliveryId[0]"
             :value="1"
           />
           <span class="checkmark"></span>
@@ -80,7 +122,7 @@
             type="radio"
             class="size-id"
             checked="checked"
-            v-model="form.delivery_method_id[1]"
+            v-model="deliveryId[1]"
             :value="2"
           />
           <span class="checkmark"></span>
@@ -91,7 +133,7 @@
             type="radio"
             class="size-id"
             checked="checked"
-            v-model="form.delivery_method_id[2]"
+            v-model="deliveryId[2]"
             :value="3"
           />
           <span class="checkmark"></span>
@@ -104,23 +146,69 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'editDetailCupon',
   data() {
     return {
-      form: {}
+      form: {},
+      sizeId: [],
+      deliveryId: [],
+      activeFood: 1,
+      activeDrink: 1
     }
   },
   created() {
     this.form = this.cupon
   },
   computed: {
-    ...mapGetters({ cupon: 'getCuponDetail' })
+    ...mapGetters({ cupon: 'getCuponDetail', imageCupon: 'getCuponImage' })
   },
   methods: {
+    ...mapActions(['patchCupon']),
     saveCupon() {
       console.log(this.cupon)
+      let newDelivery = this.deliveryId.filter(x => {
+        return x != ''
+      })
+      let newSize = this.sizeId.filter(x => {
+        return x != ''
+      })
+      const {
+        cupon_id,
+        cupon_name,
+        cupon_price,
+        cupon_description,
+        cupon_discount,
+        cupon_started_at,
+        cupon_ended_at,
+        cupon_code,
+        cupon_status,
+        category_id
+      } = this.form
+      const data = new FormData()
+      data.append('cupon_id', cupon_id)
+      data.append('cupon_name', cupon_name)
+      data.append('cupon_price', cupon_price)
+      data.append('cupon_description', cupon_description)
+      data.append('cupon_discount', cupon_discount)
+      data.append('cupon_image', this.imageCupon)
+      data.append('size_id', newSize)
+      data.append('delivery_method_id', newDelivery)
+      data.append('cupon_started_at', cupon_started_at)
+      data.append('cupon_ended_at', cupon_ended_at)
+      data.append('cupon_status', cupon_status)
+      data.append('cupon_code', cupon_code)
+      data.append('category_id', category_id)
+      this.patchCupon(data)
+    },
+    drinkButton() {
+      this.activeFood = 0
+      this.form.category_id = 2
+    },
+    foodButton() {
+      this.activeFood = 0
+      this.form.category_id = 1
     }
   }
 }

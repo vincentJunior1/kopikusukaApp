@@ -80,11 +80,6 @@
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
   props: ['dataProduct'],
-  data() {
-    return {
-      currentPage: 1
-    }
-  },
   computed: {
     ...mapGetters({
       product: 'getDataProducts',
@@ -92,7 +87,15 @@ export default {
       limit: 'getLimitProduct',
       rows: 'getTotalRowsProduct'
     }),
-    ...mapGetters({ user: 'setUser' })
+    ...mapGetters({ user: 'setUser' }),
+    currentPage: {
+      get() {
+        return this.page
+      },
+      set(newPage) {
+        return newPage
+      }
+    }
   },
   created() {
     this.getProduct()

@@ -12,6 +12,7 @@ import Payment from '../views/Payment.vue'
 import Cupon from '../views/AddNewCupon.vue'
 import Profile from '../views/profile.vue'
 import EditCupon from '../views/EditCupon.vue'
+import Dashboard from '../views/dashboard.vue'
 import Store from '../store'
 Vue.use(VueRouter)
 
@@ -82,6 +83,12 @@ const routes = [
     path: '/editCupon/:id',
     name: 'EditCupon',
     component: EditCupon,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: Dashboard,
     meta: { requiresAuth: true }
   }
 ]

@@ -85,6 +85,21 @@ export default {
             reject(new Error(err))
           })
       })
+    },
+    patchCupon(_context, payload) {
+      return new Promise(() => {
+        axios
+          .patch(
+            `http://${process.env.VUE_APP_ROOT_URL}/cupon/${payload.cupon_id}`,
+            payload
+          )
+          .then(result => {
+            console.log(result)
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      })
     }
   },
   getters: {
