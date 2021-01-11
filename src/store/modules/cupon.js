@@ -1,4 +1,6 @@
 import axios from 'axios'
+import dotenv from 'dotenv'
+dotenv.config()
 export default {
   state: {
     cupon_image: '',
@@ -6,7 +8,8 @@ export default {
     cupon_started_at: '',
     cupon_ended_at: '',
     cupon_code: '',
-    cupon: []
+    cupon: [],
+    cuponDetail: {}
   },
   mutations: {
     setDataCupon(state, payload) {
@@ -26,6 +29,9 @@ export default {
     },
     setCuponCode(state, payload) {
       state.cupon_code = payload
+    },
+    setCuponDetail(state, payload) {
+      state.cuponDetail = payload
     }
   },
   actions: {
@@ -66,6 +72,19 @@ export default {
             reject(new Error(err))
           })
       })
+    },
+    getCuponById(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .get(`http://${process.env.VUE_APP_ROOT_URL}/cupon/${payload}`)
+          .then(result => {
+            context.commit('setCuponDetail', result.data.data[0])
+            resolve(result)
+          })
+          .catch(err => {
+            reject(new Error(err))
+          })
+      })
     }
   },
   getters: {
@@ -86,6 +105,9 @@ export default {
     },
     getCuponCode(state) {
       return state.cupon_code
+    },
+    getCuponDetail(state) {
+      return state.cuponDetail
     }
   }
 }

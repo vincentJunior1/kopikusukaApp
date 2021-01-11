@@ -1,5 +1,8 @@
 <template>
   <div class="profile-image">
+    <b-alert class="notif" v-model="editAlert" variant="success" dismissible>
+      Sucess Edit Profile
+    </b-alert>
     <div class="image">
       <img
         class="image-profile"
@@ -26,7 +29,8 @@ export default {
   data() {
     return {
       photo: 'Choose Photo',
-      image: ''
+      image: '',
+      editAlert: false
     }
   },
   computed: {
@@ -71,12 +75,26 @@ export default {
       data.append('user_phone', user_phone)
       data.append('user_status', user_status)
       this.editProfiles(data)
+        .then(() => {
+          this.editAlert = true
+          setTimeout(() => {
+            this.$router.push('/')
+          }, 3000)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   }
 }
 </script>
 
 <style scoped>
+.notif {
+  position: fixed;
+  top: 100px;
+  right: 100px;
+}
 .fullname {
   margin-top: 25px;
   font-size: 24px;

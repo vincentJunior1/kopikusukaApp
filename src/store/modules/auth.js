@@ -44,8 +44,8 @@ export default {
           })
       })
     },
-    editProfiles(_context, payload) {
-      return new Promise(() => {
+    editProfiles(context, payload) {
+      return new Promise((resolve, reject) => {
         console.log(payload)
         axios
           .patch(
@@ -53,10 +53,13 @@ export default {
             payload
           )
           .then(result => {
-            console.log(result)
+            let newData = { ...context.state.user, ...result.data.data }
+            console.log(newData)
+            context.commit('setUser', newData)
+            resolve(result)
           })
           .catch(err => {
-            console.log.log(err)
+            reject(new Error(err))
           })
       })
     },

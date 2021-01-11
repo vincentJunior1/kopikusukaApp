@@ -17,7 +17,7 @@
           :src="
             item.cupon_image != ''
               ? 'http://localhost:3000/cupon/' + item.cupon_image
-              : '../../assets/img/Promo2.png'
+              : require('../../assets/img/Promo2.png')
           "
           alt=""
         />
@@ -32,7 +32,11 @@
         >
           X
         </button>
-        <button v-if="user.user_role === 1" class="update-cupon btn-info">
+        <button
+          @click="updateCupon(item.cupon_id)"
+          v-if="user.user_role === 1"
+          class="update-cupon btn-info"
+        >
           U
         </button>
       </div>
@@ -62,6 +66,9 @@ export default {
         .catch(err => {
           console.log(err)
         })
+    },
+    updateCupon(id) {
+      this.$router.push({ name: 'EditCupon', params: { id: id } })
     }
   }
 }
