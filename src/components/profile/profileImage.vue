@@ -6,7 +6,11 @@
     <div class="image">
       <img
         class="image-profile"
-        src="../../assets/img/profile-pic.png"
+        :src="
+          user.user_image == ''
+            ? require('../../assets/img/profile-pic.png')
+            : 'http://localhost:3000/' + user.user_image
+        "
         alt=""
       />
       <p class="fullname">{{ user.user_firstname }} {{ user.user_lastname }}</p>
@@ -109,6 +113,8 @@ export default {
 }
 .image-profile {
   border-radius: 100px;
+  width: 160px;
+  height: 160px;
 }
 .image-user {
   width: 70%;

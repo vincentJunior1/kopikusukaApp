@@ -10,6 +10,7 @@
           <input
             type="email"
             class="form-control col-sm-12"
+            disabled
             v-model="form.user_email"
             aria-describedby="emailHelp"
           />

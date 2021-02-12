@@ -153,8 +153,10 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import { alert } from '../../mixins/alert'
 export default {
   name: 'addDetailCupon',
+  mixins: [alert],
   data() {
     return {
       activeFood: 1,
@@ -231,13 +233,10 @@ export default {
       data.append('category_id', category_id)
       this.postCupon(data)
         .then(result => {
-          console.log(result)
-          setTimeout(() => {
-            this.$router.push('/')
-          }, 2000)
+          this.successAlert(result.data.message)
         })
-        .catch(err => {
-          console.log(err)
+        .catch(error => {
+          this.errorAlert(error.data.message)
         })
     }
   }
