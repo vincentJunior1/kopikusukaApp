@@ -38,7 +38,7 @@
               checked="checked"
               @click="drinkButton"
               :value="1"
-              v-model="form.size_id"
+              v-model="form.size_id[0]"
               :disabled="activeDrink == 0"
             />
             <span class="checkmark"></span>
@@ -51,7 +51,7 @@
               checked="checked"
               @click="drinkButton"
               :value="2"
-              v-model="form.size_id"
+              v-model="form.size_id[1]"
               :disabled="activeDrink == 0"
             />
             <span class="checkmark"></span>
@@ -64,7 +64,7 @@
               @click="drinkButton"
               checked="checked"
               :value="3"
-              v-model="form.size_id"
+              v-model="form.size_id[2]"
               :disabled="activeDrink == 0"
             />
             <span class="checkmark"></span>
@@ -77,7 +77,7 @@
               @click="foodButton"
               checked="checked"
               :value="4"
-              v-model="form.size_id"
+              v-model="form.size_id[3]"
               :disabled="activeFood == 0"
             />
             <span class="checkmark"></span>
@@ -90,7 +90,7 @@
               @click="foodButton"
               checked="checked"
               :value="5"
-              v-model="form.size_id"
+              v-model="form.size_id[4]"
               :disabled="activeFood == 0"
             />
             <span class="checkmark"></span>
@@ -103,7 +103,7 @@
               @click="foodButton"
               checked="checked"
               :value="6"
-              v-model="form.size_id"
+              v-model="form.size_id[5]"
               :disabled="activeFood == 0"
             />
             <span class="checkmark"></span>
@@ -162,6 +162,7 @@ export default {
   props: ['getData'],
   data() {
     return {
+      message: '',
       activeDrink: 1,
       activeFood: 1,
       form: {
@@ -231,7 +232,7 @@ export default {
       data.append('product_status', product_status)
       this.postProduct(data)
         .then(result => {
-          console.log(result)
+          this.message = result.data.data.message
           this.$router.push('/product')
         })
         .catch(err => {

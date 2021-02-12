@@ -86,18 +86,19 @@ export default {
           })
       })
     },
-    patchCupon(_context, payload) {
-      return new Promise(() => {
+    patchCupon(context, payload) {
+      return new Promise((resolve, reject) => {
+        console.log(context.state.cuponDetail.cupon_id)
         axios
           .patch(
-            `http://${process.env.VUE_APP_ROOT_URL}/cupon/${payload.cupon_id}`,
+            `http://${process.env.VUE_APP_ROOT_URL}/cupon/${context.state.cuponDetail.cupon_id}`,
             payload
           )
           .then(result => {
-            console.log(result)
+            resolve(result)
           })
           .catch(err => {
-            console.log(err)
+            reject(new Error(err))
           })
       })
     }

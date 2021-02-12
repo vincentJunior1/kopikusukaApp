@@ -87,14 +87,11 @@ export default {
       limit: 'getLimitProduct',
       rows: 'getTotalRowsProduct'
     }),
-    ...mapGetters({ user: 'setUser' }),
-    currentPage: {
-      get() {
-        return this.page
-      },
-      set(newPage) {
-        return newPage
-      }
+    ...mapGetters({ user: 'setUser' })
+  },
+  data() {
+    return {
+      currentPage: 1
     }
   },
   created() {

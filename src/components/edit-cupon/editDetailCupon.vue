@@ -6,138 +6,23 @@
         <input
           type="text"
           class="input-text"
-          v-model="form.cupon_name"
+          v-model="cupon.cupon_name"
           placeholder="Type Cupon Name min 50 characters"
         />
         <p class="label-input">Price :</p>
         <input
           type="number"
           class="input-text"
-          v-model="form.cupon_price"
+          v-model="cupon.cupon_price"
           placeholder="Type the normal price"
         />
         <p class="label-input">Description :</p>
         <input
           type="text"
           class="input-text"
-          v-model="form.cupon_description"
+          v-model="cupon.cupon_description"
           placeholder="Describe your cupon "
         />
-        <p class="label-input">Select Size :</p>
-        <p class="label-desc">
-          Click Product Size What you Want to use for this promo
-        </p>
-        <label class="container"
-          >Reguler
-          <input
-            type="radio"
-            class="size-id"
-            v-model="sizeId[0]"
-            @click="drinkButton"
-            checked="checked"
-            :value="1"
-          />
-          <span class="checkmark"></span>
-        </label>
-        <label class="container"
-          >Medium
-          <input
-            type="radio"
-            class="size-id"
-            v-model="sizeId[1]"
-            @click="drinkButton"
-            checked="checked"
-            :value="2"
-          />
-          <span class="checkmark"></span>
-        </label>
-        <label class="container"
-          >Large
-          <input
-            type="radio"
-            class="size-id"
-            v-model="sizeId[2]"
-            @click="drinkButton"
-            checked="checked"
-            :value="3"
-          />
-          <span class="checkmark"></span>
-        </label>
-        <label class="container"
-          >250 Gram
-          <input
-            type="radio"
-            class="size-id"
-            v-model="sizeId[3]"
-            @click="foodButton"
-            checked="checked"
-            :value="4"
-          />
-          <span class="checkmark"></span>
-        </label>
-        <label class="container"
-          >500 Gram
-          <input
-            type="radio"
-            class="size-id"
-            v-model="sizeId[4]"
-            @click="foodButton"
-            checked="checked"
-            :value="5"
-          />
-          <span class="checkmark"></span>
-        </label>
-        <label class="container"
-          >750 Gram
-          <input
-            type="radio"
-            class="size-id"
-            v-model="sizeId[5]"
-            @click="foodButton"
-            checked="checked"
-            :value="6"
-          />
-          <span class="checkmark"></span>
-        </label>
-        <p class="label-input" style="margin-top:20px;">
-          Select Delivery Method :
-        </p>
-        <p class="label-desc">
-          Click method what you want to use for this promo
-        </p>
-        <label class="container"
-          >Home Delivery
-          <input
-            type="radio"
-            class="size-id"
-            checked="checked"
-            v-model="deliveryId[0]"
-            :value="1"
-          />
-          <span class="checkmark"></span>
-        </label>
-        <label class="container"
-          >Dine In
-          <input
-            type="radio"
-            class="size-id"
-            checked="checked"
-            v-model="deliveryId[1]"
-            :value="2"
-          />
-          <span class="checkmark"></span>
-        </label>
-        <label class="container"
-          >Take Away
-          <input
-            type="radio"
-            class="size-id"
-            checked="checked"
-            v-model="deliveryId[2]"
-            :value="3"
-          />
-          <span class="checkmark"></span>
-        </label>
         <button class="save-cupon" @click="saveCupon">Save Promo</button>
         <button class="cancel-cupon">Cancel Promo</button>
       </div>
@@ -147,6 +32,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import { alert } from '../../mixins/alert'
 export default {
   name: 'editDetailCupon',
   data() {
@@ -158,6 +44,7 @@ export default {
       activeDrink: 1
     }
   },
+  mixins: [alert],
   created() {
     this.form = this.cupon
   },
@@ -167,7 +54,6 @@ export default {
   methods: {
     ...mapActions(['patchCupon']),
     saveCupon() {
-      console.log(this.cupon)
       let newDelivery = this.deliveryId.filter(x => {
         return x != ''
       })
@@ -200,7 +86,15 @@ export default {
       data.append('cupon_status', cupon_status)
       data.append('cupon_code', cupon_code)
       data.append('category_id', category_id)
+      console.log('jalan')
       this.patchCupon(data)
+        .then(result => {
+          this.successAlert(result.data.message)
+          this.$router.push('/product')
+        })
+        .catch(error => {
+          this.errorAlert(error.data.mesasge)
+        })
     },
     drinkButton() {
       this.activeFood = 0
