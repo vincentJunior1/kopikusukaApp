@@ -81,6 +81,7 @@
 </template>
 <script>
 import { mapGetters, mapMutations } from 'vuex'
+import { alert } from '../../mixins/alert'
 export default {
   computed: {
     ...mapGetters({
@@ -92,6 +93,7 @@ export default {
       dataCart: 'getDataCart'
     })
   },
+  mixins: [alert],
   created() {
     this.cart = this.dataCart
   },
@@ -138,7 +140,7 @@ export default {
         }
         this.cart = [...this.cart, setCart]
         this.setDataCart(this.cart)
-        this.addToCard = true
+        this.successAlert('Sucess Add Data To Cart')
         setTimeout(() => {
           this.$router.push('/product')
         }, 3000)

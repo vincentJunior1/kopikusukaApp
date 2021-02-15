@@ -1,15 +1,23 @@
 <template>
   <div class="image-detail">
     <div class="menu-detail">
-      <span class="span-menu">Favorite & Promo > </span>
-      <span class="span-product">{{ dataDetail.product_name }}</span>
+      <span class="span-menu" style="cursor:pointer;" @click="goBack"
+        >Favorite & Promo >
+      </span>
+      <span class="span-product">{{ dataDetail[0].product_name }}</span>
     </div>
     <img
       class="product-detail-image"
-      sm="12"
-      src="../../assets/img/coldbrew.png"
+      id="product-image"
+      :src="
+        dataDetail[0].product_image == ''
+          ? require('../../assets/img/coldbrew.png')
+          : 'http://localhost:3000/' + dataDetail[0].product_image
+      "
       alt=""
     />
+    <b-button class="edit-image" @click="editImage">✏️</b-button>
+    <input type="file" id="fileUpload" @change="changeImage" hidden />
     <p class="about-delivery">
       Delivery only on <strong>Monday to friday </strong> at
       <strong>1 - 7 pm</strong>
@@ -17,11 +25,27 @@
   </div>
 </template>
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'imageEdit',
   computed: {
     ...mapState(['dataDetail'])
+  },
+  created() {},
+  methods: {
+    ...mapMutations(['imageSave']),
+    goBack() {
+      this.$router.push('/product')
+    },
+    editImage() {
+      document.getElementById('fileUpload').click()
+    },
+    changeImage(event) {
+      document.getElementById('product-image').src = window.URL.createObjectURL(
+        event.target.files[0]
+      )
+      this.imageSave(event.target.files[0])
+    }
   }
 }
 </script>
@@ -47,5 +71,16 @@ export default {
   width: 260px;
   font-size: 20px;
   margin-bottom: 140px;
+}
+.edit-image {
+  position: absolute;
+  right: 50px;
+  top: 170px;
+  background-color: #6a4029 !important;
+  border: none !important;
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  padding-right: 10px;
 }
 </style>

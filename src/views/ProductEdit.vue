@@ -2,9 +2,9 @@
   <div class="product-edit">
     <Navbar />
     <b-container class="bv-example-row">
-      <b-row>
-        <b-col><DetailEdit /></b-col>
-        <b-col><EditDetail /></b-col>
+      <b-row sm="12">
+        <b-col sm="6"><ImageEdit /></b-col>
+        <b-col sm="6"><EditDetail /></b-col>
       </b-row>
     </b-container>
     <Footer />
@@ -15,13 +15,15 @@
 import Navbar from '../components/_base/Navbar'
 import Footer from '../components/_base/Footer'
 import EditDetail from '../components/edit-product/editDetail'
+import ImageEdit from '../components/edit-product/imageEdit'
 import { mapActions } from 'vuex'
 export default {
   name: 'productEdit',
   components: {
     Navbar,
     Footer,
-    EditDetail
+    EditDetail,
+    ImageEdit
   },
   data() {
     return {

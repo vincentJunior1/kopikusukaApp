@@ -46,7 +46,11 @@
             <template #button-content>
               <img
                 class="avatar-nav"
-                src="../../assets/img/avatar.png"
+                :src="
+                  user.user_image == ''
+                    ? require('../../assets/img/avatar.png')
+                    : 'http://localhost:3000/' + user.user_image
+                "
                 alt=""
               />
             </template>
@@ -61,6 +65,8 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import dotenv from 'dotenv'
+dotenv.config()
 export default {
   name: 'Navbar',
   data() {

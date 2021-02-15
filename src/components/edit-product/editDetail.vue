@@ -64,6 +64,7 @@
 </template>
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex'
+import { alert } from '../../mixins/alert'
 export default {
   name: 'editDetail',
   data() {
@@ -74,6 +75,7 @@ export default {
       size: {}
     }
   },
+  mixins: [alert],
   created() {
     this.product = this.setDetailProduct[0]
     console.log(this.setDetailProduct)
@@ -82,7 +84,7 @@ export default {
     this.getSize()
   },
   computed: {
-    ...mapGetters(['setDetailProduct']),
+    ...mapGetters(['setDetailProduct', 'getImageProduct']),
     ...mapState(['dataDeliveryProduct']),
     ...mapState(['dataDetail']),
     ...mapState(['dataDelivery']),
@@ -102,22 +104,31 @@ export default {
     },
     getSize() {
       this.getDataSize()
-        .then(result => {
-          this.size = result
-        })
-        .catch(err => {
-          console.log(err)
-        })
     },
-    saveEdit(product) {
-      this.saveEditProduct(product)
+    saveEdit() {
+      const {
+        category_id,
+        product_name,
+        product_price,
+        product_desc,
+        size_id,
+        product_status
+      } = this.product
+      const data = new FormData()
+      data.append('category_id', category_id)
+      data.append('product_name', product_name)
+      data.append('product_price', product_price)
+      data.append('product_desc', product_desc)
+      data.append('product_image', this.getImageProduct)
+      data.append('size_id', size_id)
+      data.append('product_status', product_status)
+      this.saveEditProduct(data)
         .then(result => {
-          console.log(result.response)
+          this.successAlert(result.data.message)
           this.$router.push('/product')
         })
-        .catch(err => {
-          console.log(err)
-          console.log('gagal')
+        .catch(error => {
+          this.errorAlert(error.data.message)
         })
     }
   }
@@ -149,6 +160,7 @@ textarea:focus {
   font-weight: 900;
   border-bottom: 1px solid black;
   border-width: 75% !important;
+  width: 100%;
 }
 .product-prices {
   font-size: 34px;

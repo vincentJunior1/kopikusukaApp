@@ -97,11 +97,11 @@ export default new Vuex.Store({
           })
       })
     },
-    saveEditProduct(_context, payload) {
+    saveEditProduct(context, payload) {
       return new Promise((resolve, reject) => {
         axios
           .patch(
-            `http://${process.env.VUE_APP_ROOT_URL}/product/${payload.product_id}`,
+            `http://${process.env.VUE_APP_ROOT_URL}/product/${context.state.dataDetail[0].product_id}`,
             payload
           )
           .then(result => {
