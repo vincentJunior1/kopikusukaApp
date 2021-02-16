@@ -7,7 +7,7 @@
     <a href="https://github.com/vincentJunior1/kopikusukaApp/pulls">Request Feature</a>
   </p>
 
-![Image Banner](https://github.com/vincentJunior1/kopikusukaApp/blob/master/src/assets/landingPage.png)
+![Image Banner](https://github.com/vincentJunior1/kopikusukaApp/blob/master/src/assets/landingPage.jpg)
 
 ## About The Project
 
