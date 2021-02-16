@@ -37,7 +37,7 @@
             ></b-form-input>
           </b-nav-form>
 
-          <b-nav-item-dropdown right>
+          <b-nav-item-dropdown right v-if="user.length != 0">
             <!-- Using 'button-content' slot -->
             <template #button-content>
               <img
