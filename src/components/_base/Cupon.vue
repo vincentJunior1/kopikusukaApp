@@ -16,7 +16,7 @@
           class="cupon-image"
           :src="
             item.cupon_image != ''
-              ? 'http://localhost:3000/cupon/' + item.cupon_image
+              ? urlPage + '/cupon/' + item.cupon_image
               : require('../../assets/img/Promo2.png')
           "
           alt=""
@@ -47,9 +47,16 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import dotenv from 'dotenv'
+dotenv.config()
 export default {
   computed: {
     ...mapGetters({ user: 'setUser', dataCupon: 'getCupons' })
+  },
+  data() {
+    return {
+      urlPage: process.env.VUE_APP_ROOT_URL
+    }
   },
   created() {
     this.getCupon()

@@ -19,7 +19,7 @@
                 <div class="cart" v-for="(item, index) in cart" :key="index">
                   <img
                     class="product-image"
-                    :src="'http://localhost:3000/' + item.product_image"
+                    :src="urlPage + '/' + item.product_image"
                     alt=""
                   />
                   <div class="inf-product">
@@ -117,6 +117,8 @@
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 import { alert } from '../../mixins/alert'
+import dotenv from 'dotenv'
+dotenv.config()
 export default {
   name: 'PaymentCard',
   computed: {
@@ -135,7 +137,8 @@ export default {
         delivery_price: 10000,
         history_total: 0,
         history_tax: 0
-      }
+      },
+      urlPage: process.env.VUE_APP_ROOT_URL
     }
   },
   created() {

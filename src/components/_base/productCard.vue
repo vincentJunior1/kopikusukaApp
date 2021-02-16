@@ -42,7 +42,7 @@
           class="img-product"
           :src="
             item.product_image != ''
-              ? 'http://localhost:3000/' + item.product_image
+              ? urlPage + '/' + item.product_image
               : 'https://picsum.photos/600/300/?image=25'
           "
           alt=""
@@ -78,6 +78,8 @@
 
 <script>
 import { mapGetters, mapActions, mapMutations } from 'vuex'
+import dotenv from 'dotenv'
+dotenv.config()
 export default {
   props: ['dataProduct'],
   computed: {
@@ -91,7 +93,8 @@ export default {
   },
   data() {
     return {
-      currentPage: 1
+      currentPage: 1,
+      urlPage: process.env.VUE_APP_ROOT_URL
     }
   },
   created() {

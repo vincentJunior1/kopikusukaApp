@@ -45,7 +45,7 @@
                 :src="
                   user.user_image == null
                     ? require('../../assets/img/avatar.png')
-                    : 'http://localhost:3000/' + user.user_image
+                    : urlPage + '/' + user.user_image
                 "
                 alt=""
               />
@@ -68,7 +68,8 @@ export default {
   data() {
     return {
       path: '',
-      search: ''
+      search: '',
+      urlPage: process.env.VUE_APP_ROOT_URL
     }
   },
   methods: {

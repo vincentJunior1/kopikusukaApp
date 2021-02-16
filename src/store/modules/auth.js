@@ -21,7 +21,7 @@ export default {
     register(_context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .post('http://localhost:3000/user/register/', payload)
+          .post(`${process.env.VUE_APP_ROOT_URL}/user/register/`, payload)
           .then(result => {
             resolve(result)
           })
@@ -33,7 +33,7 @@ export default {
     login(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .post('http://localhost:3000/user/login', payload)
+          .post(`${process.env.VUE_APP_ROOT_URL}/user/login`, payload)
           .then(result => {
             context.commit('setUser', result.data.data)
             localStorage.setItem('token', result.data.data.token)

@@ -38,7 +38,7 @@ export default {
     postCupon(_context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .post('http://localhost:3000/cupon/', payload)
+          .post(`${process.env.VUE_APP_ROOT_URL}/cupon/`, payload)
           .then(result => {
             resolve(result)
           })
@@ -50,7 +50,7 @@ export default {
     getCupon(context) {
       return new Promise((resolve, reject) => {
         axios
-          .get('http://localhost:3000/cupon')
+          .get(`${process.env.VUE_APP_ROOT_URL}/cupon`)
           .then(res => {
             context.commit('setDataCupon', res.data.data)
             resolve(res)
@@ -63,7 +63,7 @@ export default {
     deleteCupon(_context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .delete('http://localhost:3000/cupon/' + payload)
+          .delete(`${process.env.VUE_APP_ROOT_URL}cupon/` + payload)
           .then(result => {
             resolve(result)
           })

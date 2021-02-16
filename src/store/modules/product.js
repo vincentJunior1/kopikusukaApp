@@ -1,4 +1,6 @@
 import axios from 'axios'
+import dotenv from 'dotenv'
+dotenv.config()
 export default {
   state: {
     product: [],
@@ -28,7 +30,7 @@ export default {
       return new Promise((resolve, reject) => {
         axios
           .get(
-            `http://localhost:3000/product/?page=${context.state.page}&limit=${context.state.limit}`
+            `${process.env.VUE_APP_ROOT_URL}/product/?page=${context.state.page}&limit=${context.state.limit}`
           )
           .then(res => {
             context.commit('setProduct', res.data)
@@ -42,7 +44,7 @@ export default {
     deleteProduct(_context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .delete('http://localhost:3000/product/' + payload)
+          .delete(`${process.env.VUE_APP_ROOT_URL}/product/` + payload)
           .then(result => {
             resolve(result)
           })
@@ -55,7 +57,7 @@ export default {
       return new Promise((resolve, reject) => {
         axios
           .get(
-            `http://localhost:3000/sorting/${payload}?page=${context.state.page}&limit=${context.state.limit}`
+            `${process.env.VUE_APP_ROOT_URL}/sorting/${payload}?page=${context.state.page}&limit=${context.state.limit}`
           )
           .then(result => {
             context.commit('setProduct', result.data)
@@ -70,7 +72,7 @@ export default {
       return new Promise((resolve, reject) => {
         axios
           .get(
-            `http://localhost:3000/product/?search=${payload}&?page=${context.state.page}&limit=${context.state.limit}`
+            `${process.env.VUE_APP_ROOT_URL}/product/?search=${payload}&?page=${context.state.page}&limit=${context.state.limit}`
           )
           .then(result => {
             context.commit('setProduct', result.data)

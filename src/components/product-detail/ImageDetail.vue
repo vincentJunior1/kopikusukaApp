@@ -10,7 +10,7 @@
       :src="
         setDetailProduct[0].product_image == ''
           ? require('../../assets/img/coldbrew.png')
-          : 'http://localhost:3000/' + setDetailProduct[0].product_image
+          : urlPage + '/' + setDetailProduct[0].product_image
       "
       alt=""
     />
@@ -22,12 +22,12 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
+import dotenv from 'dotenv'
+dotenv.config()
 export default {
   data() {
     return {
-      showData() {
-        console.log(this.imageDetail)
-      }
+      urlPage: process.env.VUE_APP_ROOT_URL
     }
   },
   computed: {

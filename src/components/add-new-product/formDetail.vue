@@ -9,15 +9,19 @@
         class="image-product"
         src="../../assets/img/photo-camera-black-tool 4.png"
         alt=""
+        id="product-image"
       />
     </div>
     <input
       type="file"
       class="take-picture-button"
+      id="fileUpload"
       @change="handleFile"
-      placeholder="Take a picture"
+      hidden
     />
-    <b-button class="choose-button">Choose from gallery</b-button>
+    <b-button class="choose-button" @click="chooseFile"
+      >Choose from gallery</b-button
+    >
     <div class="delivery">
       <p class="delivery-method">Delivery Hour :</p>
       <b-form-select
@@ -84,7 +88,13 @@ export default {
       this.$root.$emit('dataQuantity', this.quantity)
     },
     handleFile(event) {
+      document.getElementById('product-image').src = window.URL.createObjectURL(
+        event.target.files[0]
+      )
       this.imageSave(event.target.files[0])
+    },
+    chooseFile() {
+      document.getElementById('fileUpload').click()
     }
   }
 }
