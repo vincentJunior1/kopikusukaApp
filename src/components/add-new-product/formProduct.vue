@@ -157,6 +157,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import { alert } from '../../mixins/alert'
 export default {
   name: 'formProduct',
   props: ['getData'],
@@ -178,6 +179,7 @@ export default {
       }
     }
   },
+  mixins: [alert],
   computed: {
     ...mapGetters(['getImageProduct'])
   },
@@ -231,12 +233,15 @@ export default {
       data.append('product_image', product_image)
       data.append('product_status', product_status)
       this.postProduct(data)
-        .then(result => {
-          this.message = result.data.data.message
+        .then(() => {
+          this.successAlert('Success Add Product')
           this.$router.push('/product')
         })
         .catch(err => {
           console.log(err)
+          this.errorAlert(
+            'Please FIll the field, Image must Jpeg or PNG and File Size must below 4mb'
+          )
         })
     }
   }
