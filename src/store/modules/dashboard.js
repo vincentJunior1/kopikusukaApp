@@ -14,7 +14,7 @@ export default {
     getDashboard(context) {
       return new Promise((resolve, reject) => {
         axios
-          .get(`http://${process.env.VUE_APP_ROOT_URL}/dashboard/`)
+          .get(`${process.env.VUE_APP_ROOT_URL}/dashboard/`)
           .then(result => {
             context.commit('setDataDashboard', result.data.data)
             resolve(result)

@@ -8,7 +8,7 @@ export default {
     postPayment(_context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .post(`http://${process.env.VUE_APP_ROOT_URL}/payment/`, payload)
+          .post(`${process.env.VUE_APP_ROOT_URL}/payment/`, payload)
           .then(result => {
             resolve(result)
           })

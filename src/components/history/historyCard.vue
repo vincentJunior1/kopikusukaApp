@@ -2,29 +2,60 @@
   <div class="history-card">
     <b-container>
       <b-row class="history-page">
-        <div inline class="card-history">
+        <div
+          inline
+          class="card-history"
+          v-for="(item, index) in history"
+          :key="index"
+        >
           <img class="img-history" src="../../assets/img/item1.png" alt="" />
           <span class="history-inf">
-            <p class="history-title">Viegie Mix Potato salad</p>
-            <p class="history-price">Rp.20000</p>
+            <p class="history-title">{{ item.product_name }}</p>
+            <p class="history-price">Rp.{{ item.history_detail_price }}</p>
             <p class="history-status">Delivered</p>
           </span>
+          <b-button
+            class="delete-history"
+            @click="deleteHistoryCard(item.history_detail_id)"
+            >X</b-button
+          >
         </div>
-        <div class="card-history">asdfasdf</div>
-        <div class="card-history">asdfasdf</div>
-        <div class="card-history">asdfasdf</div>
       </b-row>
     </b-container>
   </div>
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 export default {
-  name: 'historyCard'
+  name: 'historyCard',
+  created() {
+    this.getAllHistory()
+  },
+  computed: {
+    ...mapGetters({ history: 'getDataDetailHistory' })
+  },
+  methods: {
+    ...mapActions(['getAllHistory', 'deleteHistory']),
+    deleteHistoryCard(id) {
+      this.deleteHistory(id)
+      this.getAllHistory()
+    }
+  }
 }
 </script>
 
 <style scoped>
+.delete-history {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  text-align: center;
+  background-color: red;
+  border: none;
+  font-weight: 700;
+  border-radius: 40px;
+}
 .history-page {
   align-items: center;
 }

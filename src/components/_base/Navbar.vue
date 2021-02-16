@@ -35,12 +35,6 @@
             ></b-form-input>
           </b-nav-form>
 
-          <b-navbar-nav class="icon-chat mt-auto mb-auto mr-2">
-            <b-nav-item
-              ><img class="chat-icon" src="../../assets/img/chat.png" alt=""
-            /></b-nav-item>
-          </b-navbar-nav>
-
           <b-nav-item-dropdown right>
             <!-- Using 'button-content' slot -->
             <template #button-content>

@@ -48,10 +48,7 @@ export default {
       return new Promise((resolve, reject) => {
         console.log(payload)
         axios
-          .patch(
-            `http://${process.env.VUE_APP_ROOT_URL}/user/editProfile`,
-            payload
-          )
+          .patch(`${process.env.VUE_APP_ROOT_URL}/user/editProfile`, payload)
           .then(result => {
             let newData = { ...context.state.user, ...result.data.data }
             console.log(newData)

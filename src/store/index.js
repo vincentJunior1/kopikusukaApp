@@ -6,6 +6,7 @@ import Product from './modules/product'
 import Cupon from './modules/cupon'
 import Payment from './modules/payment'
 import Dashboard from './modules/dashboard'
+import History from './modules/history'
 import dotenv from 'dotenv'
 import createPersistedState from 'vuex-persistedstate'
 
@@ -14,7 +15,7 @@ dotenv.config()
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  modules: { Auth, Product, Cupon, Payment, Dashboard },
+  modules: { Auth, Product, Cupon, Payment, Dashboard, History },
   state: {
     dataDetail: {},
     dataDelivery: {},
@@ -47,7 +48,7 @@ export default new Vuex.Store({
     postProduct(_context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .post(`http://${process.env.VUE_APP_ROOT_URL}/product/`, payload)
+          .post(`${process.env.VUE_APP_ROOT_URL}/product/`, payload)
           .then(result => {
             resolve(result)
           })
@@ -59,7 +60,7 @@ export default new Vuex.Store({
     getDataDetail(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .get(`http://${process.env.VUE_APP_ROOT_URL}/product/${payload}`)
+          .get(`${process.env.VUE_APP_ROOT_URL}/product/${payload}`)
           .then(result => {
             context.commit('setDetailData', result.data.data)
             context.commit('setValidationDelivery', result.data.data[0])
@@ -74,7 +75,7 @@ export default new Vuex.Store({
     getDataDelivery(context) {
       return new Promise((resolve, reject) => {
         axios
-          .get(`http://${process.env.VUE_APP_ROOT_URL}/size/delivery/`)
+          .get(`${process.env.VUE_APP_ROOT_URL}/size/delivery/`)
           .then(result => {
             context.commit('setDeliveryData', result.data.data)
             resolve(result)
@@ -87,7 +88,7 @@ export default new Vuex.Store({
     getDataSize(context) {
       return new Promise((resolve, reject) => {
         axios
-          .get(`http://${process.env.VUE_APP_ROOT_URL}/size/size/`)
+          .get(`${process.env.VUE_APP_ROOT_URL}/size/size/`)
           .then(result => {
             context.commit('setAllSize', result.data.data)
             resolve(result.data.data)
@@ -101,7 +102,7 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         axios
           .patch(
-            `http://${process.env.VUE_APP_ROOT_URL}/product/${context.state.dataDetail[0].product_id}`,
+            `${process.env.VUE_APP_ROOT_URL}/product/${context.state.dataDetail[0].product_id}`,
             payload
           )
           .then(result => {

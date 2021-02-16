@@ -76,7 +76,7 @@ export default {
     getCuponById(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .get(`http://${process.env.VUE_APP_ROOT_URL}/cupon/${payload}`)
+          .get(`${process.env.VUE_APP_ROOT_URL}/cupon/${payload}`)
           .then(result => {
             context.commit('setCuponDetail', result.data.data[0])
             resolve(result)
@@ -91,7 +91,7 @@ export default {
         console.log(context.state.cuponDetail.cupon_id)
         axios
           .patch(
-            `http://${process.env.VUE_APP_ROOT_URL}/cupon/${context.state.cuponDetail.cupon_id}`,
+            `${process.env.VUE_APP_ROOT_URL}/cupon/${context.state.cuponDetail.cupon_id}`,
             payload
           )
           .then(result => {
