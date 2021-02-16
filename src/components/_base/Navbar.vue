@@ -20,7 +20,9 @@
             to="/dashboard"
             >Dashboard</b-nav-item
           >
-          <b-nav-item class="nav-menu" to="/history">History</b-nav-item>
+          <b-nav-item class="nav-menu" v-if="user.user_role === 0" to="/history"
+            >History</b-nav-item
+          >
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->

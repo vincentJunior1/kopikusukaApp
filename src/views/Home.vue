@@ -2,7 +2,7 @@
   <div class="div">
     <Navbar />
     <div class="home">
-      <img alt="Vue logo" src="../assets/logo.png" />
+      <Landingpage />
     </div>
     <Footer />
   </div>
@@ -11,11 +11,13 @@
 <script>
 import Navbar from '../components/_base/Navbar'
 import Footer from '../components/_base/Footer'
+import Landingpage from '../components/LandingPage/LandingPage'
 export default {
   name: 'Home',
   components: {
     Navbar,
-    Footer
+    Footer,
+    Landingpage
   }
 }
 </script>
