@@ -116,11 +116,13 @@
 </template>
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex'
+import { alert } from '../../mixins/alert'
 export default {
   name: 'PaymentCard',
   computed: {
     ...mapGetters({ cart: 'getDataCart', user: 'setUser' })
   },
+  mixins: [alert],
   data() {
     return {
       subtotal: 0,
@@ -154,13 +156,12 @@ export default {
       detailPayment = [this.payment, ...this.cart]
       this.postPayment(detailPayment)
         .then(() => {
-          this.message = 'Your Order Will Be Processed'
-          this.showMessage = true
+          this.successAlert('Your Order Will be Process')
           let carts = []
           this.setDataCart(carts)
         })
         .catch(err => {
-          console.log(err)
+          this.errorAlert(err.data.message)
         })
     },
     openModal() {

@@ -75,7 +75,7 @@
       </b-form>
       <b-button class="add-to-cart" @click="addToCart">Add To Cart</b-button>
     </div>
-    <b-button class="check-out">Check Out</b-button>
+    <b-button class="check-out" @click="checkOut">Check Out</b-button>
     {{ product }}
   </div>
 </template>
@@ -143,6 +143,32 @@ export default {
         this.successAlert('Sucess Add Data To Cart')
         setTimeout(() => {
           this.$router.push('/product')
+        }, 3000)
+      }
+    },
+    checkOut() {
+      if (this.product.history_detail_quantity == 0) {
+        this.showDismissibleAlert = true
+        this.messageAlert = "Quantity Can't be empty"
+      } else if (this.product.delivery == '') {
+        this.showDismissibleAlert = true
+        this.messageAlert = 'Please Select Delivery Method'
+      } else if (this.product.history_size == '') {
+        this.showDismissibleAlert = true
+        this.messageAlert = 'Please Select Size First'
+      } else {
+        const setCart = {
+          product_name: this.detailProduct[0].product_name,
+          history_size: this.product.history_size,
+          product_image: this.detailProduct[0].product_image,
+          history_detail_quantity: this.product.history_detail_quantity,
+          product_price: this.detailProduct[0].product_price
+        }
+        this.cart = [...this.cart, setCart]
+        this.setDataCart(this.cart)
+        this.successAlert('Sucess Add Data To Cart')
+        setTimeout(() => {
+          this.$router.push('/payment')
         }, 3000)
       }
     }
