@@ -7,7 +7,7 @@
       <img
         class="image-profile"
         :src="
-          user.user_image == ''
+          user.user_image == null
             ? require('../../assets/img/profile-pic.png')
             : 'http://localhost:3000/' + user.user_image
         "

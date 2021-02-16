@@ -20,7 +20,9 @@
             We provide high quality beans, good taste, and healthy meals made by
             love just for you. Start your day with us for a bigger smile!
           </p>
-          <a class="btn get-started" href="#" role="button">Get Started</a>
+          <b-button class="btn get-started" to="/product" role="button"
+            >Get Started</b-button
+          >
         </div>
       </div>
       <div class="container information-rec">

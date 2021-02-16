@@ -60,6 +60,20 @@ export default {
           })
       })
     },
+    confirmationEmail(_context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .patch(
+            `${process.env.VUE_APP_ROOT_URL}/user/confirmationEmail/${payload}`
+          )
+          .then(result => {
+            resolve(result)
+          })
+          .catch(err => {
+            reject(new Error(err))
+          })
+      })
+    },
     logout(context) {
       localStorage.removeItem('token')
       context.commit('delUser')

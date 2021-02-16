@@ -43,7 +43,7 @@
               <img
                 class="avatar-nav"
                 :src="
-                  user.user_image == ''
+                  user.user_image == null
                     ? require('../../assets/img/avatar.png')
                     : 'http://localhost:3000/' + user.user_image
                 "

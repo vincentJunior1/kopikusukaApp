@@ -44,12 +44,14 @@
 
 <script>
 import { mapActions } from 'vuex'
+import { alert } from '../../mixins/alert'
 import Footer from '../_base/Footer'
 export default {
   name: 'loginForm',
   components: {
     Footer
   },
+  mixins: [alert],
   data() {
     return {
       form: {
@@ -63,7 +65,7 @@ export default {
         user_gender: 1,
         user_birthday: new Date(),
         user_role: 0,
-        user_status: 1
+        user_status: 0
       }
     }
   },
@@ -71,13 +73,14 @@ export default {
     ...mapActions(['register']),
     onSubmit() {
       this.register(this.form)
-        .then(result => {
-          console.log(result)
+        .then(() => {
+          this.successAlert(
+            'Success Register Please check your email for verify your account'
+          )
           this.$router.push('/login')
         })
         .catch(err => {
-          console.log(err.data)
-          alert(err.data.message)
+          this.errorAlert(err.data.message)
         })
     },
     onReset() {

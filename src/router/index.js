@@ -13,6 +13,7 @@ import Cupon from '../views/AddNewCupon.vue'
 import Profile from '../views/profile.vue'
 import EditCupon from '../views/EditCupon.vue'
 import Dashboard from '../views/dashboard.vue'
+import ConfirmationEmail from '../views/ConfirmationEmail.vue'
 import Store from '../store'
 Vue.use(VueRouter)
 
@@ -90,6 +91,12 @@ const routes = [
     name: 'Dashboard',
     component: Dashboard,
     meta: { requiresAuth: true }
+  },
+  {
+    path: '/confirmEmail/:id',
+    name: 'ConfirmationEmail',
+    component: ConfirmationEmail,
+    meta: { requiresVisitor: true }
   }
 ]
 
