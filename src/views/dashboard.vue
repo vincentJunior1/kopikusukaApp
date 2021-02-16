@@ -38,7 +38,7 @@ export default {
   },
   created() {
     this.getDashboard().then(() => {
-      this.show = true
+      this.createChart('planet-chart', this.charts)
     })
   },
   data() {
@@ -47,9 +47,7 @@ export default {
       show: false
     }
   },
-  mounted() {
-    this.createChart('planet-chart', this.charts)
-  },
+  mounted() {},
   computed: {
     ...mapGetters({ dashboard: 'getDataDashboard' })
   },
