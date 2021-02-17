@@ -63,7 +63,7 @@ export default {
     deleteCupon(_context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .delete(`${process.env.VUE_APP_ROOT_URL}cupon/` + payload)
+          .delete(`${process.env.VUE_APP_ROOT_URL}/cupon/` + payload)
           .then(result => {
             resolve(result)
           })
