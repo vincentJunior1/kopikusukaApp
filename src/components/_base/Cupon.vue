@@ -67,7 +67,6 @@ export default {
     deleteCupons(id) {
       this.deleteCupon(id)
         .then(result => {
-          console.log(result)
           this.getCupon()
         })
         .catch(err => {

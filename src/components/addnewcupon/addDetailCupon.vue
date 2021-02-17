@@ -234,9 +234,12 @@ export default {
       this.postCupon(data)
         .then(result => {
           this.successAlert(result.data.message)
+          this.$router.push('/product')
         })
         .catch(error => {
-          this.errorAlert(error.data.message)
+          this.errorAlert(
+            'Please fill every field, make sure your image is JPG or PNG AND file size must below 4mb '
+          )
         })
     }
   }
