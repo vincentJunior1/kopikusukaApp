@@ -9,7 +9,7 @@
         :src="
           user.user_image == null
             ? require('../../assets/img/profile-pic.png')
-            : 'http://localhost:3000/' + user.user_image
+            : path + '/' + user.user_image
         "
         alt=""
       />
@@ -28,13 +28,16 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import dotenv from 'dotenv'
+dotenv.config()
 export default {
   name: 'profileImage',
   data() {
     return {
       photo: 'Choose Photo',
       image: '',
-      editAlert: false
+      editAlert: false,
+      path: process.env.VUE_APP_ROOT_URL
     }
   },
   computed: {

@@ -76,7 +76,6 @@
       <b-button class="add-to-cart" @click="addToCart">Add To Cart</b-button>
     </div>
     <b-button class="check-out" @click="checkOut">Check Out</b-button>
-    {{ product }}
   </div>
 </template>
 <script>
