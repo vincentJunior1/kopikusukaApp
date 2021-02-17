@@ -58,13 +58,13 @@ export default {
       new Chart(ctx, {
         type: chartData.type,
         data: {
-          labels: this.dashboard.intervalInvoice.map(x =>
+          labels: this.dashboard.invoicePerday.map(x =>
             moment(x.history_created_at).format('DD-MM-YYYY')
           ),
           datasets: [
             {
               label: 'Invoice Peryear',
-              data: this.dashboard.intervalInvoice.map(x => x.invoice_interval),
+              data: this.dashboard.invoicePerday.map(x => x.invoice_perweek),
               backgroundColor: [
                 'rgba(255,255,255, 0.5)' // Green
               ],

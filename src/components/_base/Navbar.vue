@@ -14,6 +14,9 @@
           <b-nav-item class="nav-menu" v-if="user.user_role === 0" to="/payment"
             >Your Card</b-nav-item
           >
+          <b-nav-item class="nav-menu" v-if="user.user_role === 1" to="/order"
+            >All Order</b-nav-item
+          >
           <b-nav-item
             class="nav-menu"
             v-if="user.user_role === 1"
@@ -36,8 +39,10 @@
               placeholder="Search"
             ></b-form-input>
           </b-nav-form>
-
-          <b-nav-item-dropdown right v-if="user.length != 0">
+          <b-button class="login" v-if="user.user_id == null" to="/login"
+            >Login
+          </b-button>
+          <b-nav-item-dropdown v-else right>
             <!-- Using 'button-content' slot -->
             <template #button-content>
               <img
@@ -91,3 +96,19 @@ export default {
   }
 }
 </script>
+<style scoped>
+.login {
+  border: none;
+  border-radius: 30px;
+  width: 100px;
+  background-color: #ffba33;
+}
+.login:hover {
+  background-color: #fca904;
+}
+.login:focus {
+  background-color: #fca904 !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+</style>

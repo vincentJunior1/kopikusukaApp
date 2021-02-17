@@ -14,6 +14,7 @@ import Profile from '../views/profile.vue'
 import EditCupon from '../views/EditCupon.vue'
 import Dashboard from '../views/dashboard.vue'
 import ConfirmationEmail from '../views/ConfirmationEmail.vue'
+import Order from '../views/Order.vue'
 import Store from '../store'
 Vue.use(VueRouter)
 
@@ -97,6 +98,12 @@ const routes = [
     name: 'ConfirmationEmail',
     component: ConfirmationEmail,
     meta: { requiresVisitor: true }
+  },
+  {
+    path: '/order',
+    name: 'Order',
+    component: Order,
+    meta: { requiresAuth: true }
   }
 ]
 
