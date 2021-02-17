@@ -12,7 +12,7 @@
       :src="
         dataDetail[0].product_image == ''
           ? require('../../assets/img/coldbrew.png')
-          : 'http://localhost:3000/' + dataDetail[0].product_image
+          : path + '/' + dataDetail[0].product_image
       "
       alt=""
     />
@@ -26,8 +26,15 @@
 </template>
 <script>
 import { mapState, mapMutations } from 'vuex'
+import dotenv from 'dotenv'
+dotenv.config()
 export default {
   name: 'imageEdit',
+  data() {
+    return {
+      path: process.env.VUE_APP_ROOT_URL
+    }
+  },
   computed: {
     ...mapState(['dataDetail'])
   },

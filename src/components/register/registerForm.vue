@@ -63,7 +63,6 @@ export default {
         user_lastname: 'User',
         user_address: 'Location',
         user_gender: 1,
-        user_birthday: new Date(),
         user_role: 0,
         user_status: 0
       }
