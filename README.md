@@ -24,7 +24,7 @@ KopiKusuka Everyone Favorite
 
 1. <a href="https://nodejs.org/en/download/">Node Js</a>
 2. Node_modules `npm install` or `yarn install`
-3. Backend API GDJ-Back-End [`here`](https://github.com/vincentJunior1/Backend-Kerjain)
+3. Backend API KopiKusuka-Back-End [`here`](https://github.com/vincentJunior1/kopikusuka)
 
 ## Getting Started
 
@@ -45,5 +45,3 @@ VUE_APP_ROOT_URL =http://localhost:3000/
 - [Vuex](https://vuex.vuejs.org/)
 
 ## License - @Vincent Junior
-
-## SR - TEAM Sky Router
